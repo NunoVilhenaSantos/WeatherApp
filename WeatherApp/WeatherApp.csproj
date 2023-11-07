@@ -67,7 +67,6 @@
 		<MauiIcon Include="Resources\AppIcon\appiconfg_other.svg" />
 		<MauiIcon Include="Resources\AppIcon\appicon_new.svg" />
 		<MauiIcon Include="Resources\AppIcon\dotnet_bot.svg" />
-		<MauiIcon Include="Resources\AppIcon\weather.png" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -81,103 +80,6 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <AndroidResource Remove="Resources\AppIcon\about_me\**" />
-	  <AndroidResource Remove="Resources\AppIcon\weather\**" />
-	  <AndroidResource Remove="Resources\AppIcon\weather_instruments\**" />
-	  <Compile Remove="Resources\AppIcon\about_me\**" />
-	  <Compile Remove="Resources\AppIcon\weather\**" />
-	  <Compile Remove="Resources\AppIcon\weather_instruments\**" />
-	  <EmbeddedResource Remove="Resources\AppIcon\about_me\**" />
-	  <EmbeddedResource Remove="Resources\AppIcon\weather\**" />
-	  <EmbeddedResource Remove="Resources\AppIcon\weather_instruments\**" />
-	  <MauiCss Remove="Resources\AppIcon\about_me\**" />
-	  <MauiCss Remove="Resources\AppIcon\weather\**" />
-	  <MauiCss Remove="Resources\AppIcon\weather_instruments\**" />
-	  <MauiXaml Remove="Resources\AppIcon\about_me\**" />
-	  <MauiXaml Remove="Resources\AppIcon\weather\**" />
-	  <MauiXaml Remove="Resources\AppIcon\weather_instruments\**" />
-	  <None Remove="Resources\AppIcon\about_me\**" />
-	  <None Remove="Resources\AppIcon\weather\**" />
-	  <None Remove="Resources\AppIcon\weather_instruments\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="Resources\AppIcon\about.svg" />
-	  <None Remove="Resources\AppIcon\about_dot_me.svg" />
-	  <None Remove="Resources\AppIcon\about_faq_help.svg" />
-	  <None Remove="Resources\AppIcon\animated\cloudy.svg" />
-	  <None Remove="Resources\AppIcon\animated\cloudy_1_day.svg" />
-	  <None Remove="Resources\AppIcon\animated\cloudy_1_night.svg" />
-	  <None Remove="Resources\AppIcon\animated\cloudy_2_day.svg" />
-	  <None Remove="Resources\AppIcon\animated\cloudy_2_night.svg" />
-	  <None Remove="Resources\AppIcon\animated\cloudy_3_day.svg" />
-	  <None Remove="Resources\AppIcon\animated\cloudy_3_night.svg" />
-	  <None Remove="Resources\AppIcon\animated\day.svg" />
-	  <None Remove="Resources\AppIcon\animated\night.svg" />
-	  <None Remove="Resources\AppIcon\animated\rainy_1_sun.svg" />
-	  <None Remove="Resources\AppIcon\animated\rainy_2_sun.svg" />
-	  <None Remove="Resources\AppIcon\animated\rainy_3_sun.svg" />
-	  <None Remove="Resources\AppIcon\animated\rainy_4_cloudy.svg" />
-	  <None Remove="Resources\AppIcon\animated\rainy_5_cloudy.svg" />
-	  <None Remove="Resources\AppIcon\animated\rainy_6_cloudy.svg" />
-	  <None Remove="Resources\AppIcon\animated\rainy_7_cloudy.svg" />
-	  <None Remove="Resources\AppIcon\animated\snowy_1_sun.svg" />
-	  <None Remove="Resources\AppIcon\animated\snowy_2_sun.svg" />
-	  <None Remove="Resources\AppIcon\animated\snowy_3_sun.svg" />
-	  <None Remove="Resources\AppIcon\animated\snowy_4_cloudy.svg" />
-	  <None Remove="Resources\AppIcon\animated\snowy_5_cloudy.svg" />
-	  <None Remove="Resources\AppIcon\animated\snowy_6_cloudy.svg" />
-	  <None Remove="Resources\AppIcon\animated\thunder.svg" />
-	  <None Remove="Resources\AppIcon\animated\weather.svg" />
-	  <None Remove="Resources\AppIcon\animated\weather_sagittarius.svg" />
-	  <None Remove="Resources\AppIcon\animated\weather_sprite.svg" />
-	  <None Remove="Resources\AppIcon\animated\weather_sunset.svg" />
-	  <None Remove="Resources\AppIcon\appiconfg.svg" />
-	  <None Remove="Resources\AppIcon\appiconfg_new.svg" />
-	  <None Remove="Resources\AppIcon\appiconfg_old.svg" />
-	  <None Remove="Resources\AppIcon\appiconfg_other.svg" />
-	  <None Remove="Resources\AppIcon\appiconNew.svg" />
-	  <None Remove="Resources\AppIcon\appicon_new.svg" />
-	  <None Remove="Resources\AppIcon\cloudiness.png" />
-	  <None Remove="Resources\AppIcon\dotnet_bot.svg" />
-	  <None Remove="Resources\AppIcon\humidity.png" />
-	  <None Remove="Resources\AppIcon\overlay.png" />
-	  <None Remove="Resources\AppIcon\pressure.png" />
-	  <None Remove="Resources\AppIcon\rainy_weather.svg" />
-	  <None Remove="Resources\AppIcon\weather.png" />
-	  <None Remove="Resources\AppIcon\weather_44_icons.svg" />
-	  <None Remove="Resources\AppIcon\wind.png" />
-	  <None Remove="Resources\AppIcon\windy_bw.svg" />
-	  <None Remove="Resources\AppIcon\windy_color.svg" />
-	  <None Remove="Resources\AppIcon\windy_umbrella.svg" />
-	  <None Remove="Resources\Images\about_me\email.svg" />
-	  <None Remove="Resources\Images\about_me\email_1_part.svg" />
-	  <None Remove="Resources\Images\about_me\email_2_part.svg" />
-	  <None Remove="Resources\Images\about_me\email_sign.svg" />
-	  <None Remove="Resources\Images\about_me\person_light_skin_tone_beard.svg" />
-	  <None Remove="Resources\Images\about_me\telephone.svg" />
-	  <None Remove="Resources\Images\about_me\telephone_booth.svg" />
-	  <None Remove="Resources\Images\about_me\telephone_cabin.svg" />
-	  <None Remove="Resources\Images\cloudiness.png" />
-	  <None Remove="Resources\Images\humidity.png" />
-	  <None Remove="Resources\Images\overlay.png" />
-	  <None Remove="Resources\Images\pressure.png" />
-	  <None Remove="Resources\Images\weather\rainy_weather.svg" />
-	  <None Remove="Resources\Images\weather\weather_44_icons.svg" />
-	  <None Remove="Resources\Images\weather\weather_icons_34_sun_down.svg" />
-	  <None Remove="Resources\Images\weather\weather_icons_35_sun_up.svg" />
-	  <None Remove="Resources\Images\weather\weather_icons_69_sun_down.svg" />
-	  <None Remove="Resources\Images\weather\weather_icons_70_sun_up.svg" />
-	  <None Remove="Resources\Images\weather\windy_bw.svg" />
-	  <None Remove="Resources\Images\weather\windy_color.svg" />
-	  <None Remove="Resources\Images\weather\windy_umbrella.svg" />
-	  <None Remove="Resources\Images\weather_instruments\anemometer_instrument_measurement_speed_technology.svg" />
-	  <None Remove="Resources\Images\weather_instruments\calibrated_forecast_instrument_kelvin_scale.svg" />
-	  <None Remove="Resources\Images\weather_instruments\reshot_icon_anemometer.svg" />
-	  <None Remove="Resources\Images\wind.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -209,13 +111,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="MainPageOld.xaml.cs">
-	    <DependentUpon>MainPageOld.xaml</DependentUpon>
+	  <Compile Update="MainPage.xaml.cs">
+	    <DependentUpon>MainPage.xaml</DependentUpon>
 	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="NewFolder\" />
+	  <Compile Update="Pages\Weather\WeatherDetailsPage.xaml.cs">
+	    <DependentUpon>WeatherDetailsPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\Weather\WeatherMainPage.xaml.cs">
+	    <DependentUpon>WeatherMainPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

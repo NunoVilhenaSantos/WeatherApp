@@ -12,41 +12,28 @@
 
 
 
-    <FlyoutItem Title="Weather Main" Icon="appiconfg_other.svg">
+    <FlyoutItem Title="Weather" Icon="weather.svg">
         <ShellContent
             Title="Home"
-            ContentTemplate="{DataTemplate weatherApp:MainPageOld}"
+            ContentTemplate="{DataTemplate weatherApp:MainPage}"
             Icon="appiconfg_other.svg" />
 
         <!--  Route="MainPage"  -->
         <ShellContent
-            Title="Home"
-            ContentTemplate="{DataTemplate local:MainPage}"
+            Title="Weather"
+            ContentTemplate="{DataTemplate weatherApp:WeatherMainPage}"
             FlyoutIcon="appiconfg_other.svg" />
 
         <ShellContent
             Title="Weather Details"
-            ContentTemplate="{DataTemplate weatherApp:DetailsPage}"
+            ContentTemplate="{DataTemplate weatherApp:WeatherDetailsPage}"
             Icon="appiconfg_other.svg" />
 
     </FlyoutItem>
 
 
-    <FlyoutItem Title="Weather Details" Icon="appiconfg_other">
-        <ShellContent ContentTemplate="{DataTemplate weatherApp:DetailsPage}" />
-    </FlyoutItem>
 
-    <FlyoutItem Title="About Me" Icon="about_dot_me.svg">
-        <ShellContent ContentTemplate="{DataTemplate weatherApp:AboutMePage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="About App" Icon="about_faq_help.svg">
-        <ShellContent ContentTemplate="{DataTemplate weatherApp:AboutAppPage}" />
-    </FlyoutItem>
-
-
-
-    <FlyoutItem Title="About" Icon="about_dot_me.svg">
+    <FlyoutItem Title="About" Icon="about.svg">
 
         <ShellContent
             Title="About Me"
@@ -59,6 +46,27 @@
             Icon="about_faq_help.svg" />
     </FlyoutItem>
 
+
+
+
+    <FlyoutItem Title="Weather Main" Icon="weather">
+        <ShellContent ContentTemplate="{DataTemplate weatherApp:WeatherMainPage}" />
+    </FlyoutItem>
+
+
+    <FlyoutItem Title="Weather Details" Icon="weather_other">
+        <ShellContent ContentTemplate="{DataTemplate weatherApp:WeatherDetailsPage}" />
+    </FlyoutItem>
+
+    
+    <FlyoutItem Title="About Me" Icon="about_dot_me.svg">
+        <ShellContent ContentTemplate="{DataTemplate weatherApp:AboutMePage}" />
+    </FlyoutItem>
+
+    
+    <FlyoutItem Title="About App" Icon="about_faq_help.svg">
+        <ShellContent ContentTemplate="{DataTemplate weatherApp:AboutAppPage}" />
+    </FlyoutItem>
 
 
 
