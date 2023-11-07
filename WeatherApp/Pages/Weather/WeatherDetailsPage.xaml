@@ -4,14 +4,13 @@
     x:Class="WeatherApp.WeatherDetailsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Weather Details Page"
-    >
+    Title="Weather Details Page">
 
 
     <VerticalStackLayout>
         <Label
-            HorizontalOptions="Center"
             FontSize="Title"
+            HorizontalOptions="Center"
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" />
     </VerticalStackLayout>

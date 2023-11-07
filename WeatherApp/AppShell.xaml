@@ -16,18 +16,18 @@
         <ShellContent
             Title="Home"
             ContentTemplate="{DataTemplate weatherApp:MainPage}"
-            Icon="appiconfg_other.svg" />
+            Icon="dotnet_bot.svg" />
 
         <!--  Route="MainPage"  -->
         <ShellContent
             Title="Weather"
             ContentTemplate="{DataTemplate weatherApp:WeatherMainPage}"
-            FlyoutIcon="appiconfg_other.svg" />
+            Icon="appiconfg_other.svg" />
 
         <ShellContent
             Title="Weather Details"
             ContentTemplate="{DataTemplate weatherApp:WeatherDetailsPage}"
-            Icon="appiconfg_other.svg" />
+            Icon="appiconfg.svg" />
 
     </FlyoutItem>
 
@@ -38,7 +38,7 @@
         <ShellContent
             Title="About Me"
             ContentTemplate="{DataTemplate weatherApp:AboutMePage}"
-            FlyoutIcon="about_dot_me.svg" />
+            Icon="about_dot_me.svg" />
 
         <ShellContent
             Title="About App"
@@ -49,21 +49,21 @@
 
 
 
-    <FlyoutItem Title="Weather Main" Icon="weather">
+    <FlyoutItem Title="Weather Main" Icon="appiconfg.svg">
         <ShellContent ContentTemplate="{DataTemplate weatherApp:WeatherMainPage}" />
     </FlyoutItem>
 
 
-    <FlyoutItem Title="Weather Details" Icon="weather_other">
+    <FlyoutItem Title="Weather Details" Icon="appiconfg.svg">
         <ShellContent ContentTemplate="{DataTemplate weatherApp:WeatherDetailsPage}" />
     </FlyoutItem>
 
-    
+
     <FlyoutItem Title="About Me" Icon="about_dot_me.svg">
         <ShellContent ContentTemplate="{DataTemplate weatherApp:AboutMePage}" />
     </FlyoutItem>
 
-    
+
     <FlyoutItem Title="About App" Icon="about_faq_help.svg">
         <ShellContent ContentTemplate="{DataTemplate weatherApp:AboutAppPage}" />
     </FlyoutItem>

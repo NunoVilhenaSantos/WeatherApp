@@ -8,10 +8,10 @@
     BackgroundColor="{DynamicResource SecondaryColor}">
 
 
-    <VerticalStackLayout>
+    <VerticalStackLayout Margin="20">
 
         <Image
-            Margin="-20,0"
+            Margin="-20,-20,-20,0"
             Aspect="Fill"
             HeightRequest="330"
             Source="overlay.svg"
@@ -27,16 +27,17 @@
             HorizontalOptions="Center"
             VerticalOptions="CenterAndExpand">
 
-            <!--  Source="appiconfg_new.svg"  -->
+            <!--  Source="appiconfg.svg"  -->
             <!--  Source="appiconfg_other.svg"  -->
             <Image
                 HeightRequest="100"
-                Source="appiconfg_new.svg"
+                Source="appiconfg.svg"
                 WidthRequest="100" />
+
         </Frame>
 
         <Frame
-            Margin="20"
+            Margin="0,20,0,20"
             Padding="10"
             CornerRadius="10"
             HasShadow="True"
