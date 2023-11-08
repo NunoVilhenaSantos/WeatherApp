@@ -5,7 +5,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:WeatherApp.Converters"
-    Title="Weather Main Page"
+    Title="Weather"
     BackgroundColor="{DynamicResource SecondaryColor}">
 
 
@@ -29,8 +29,8 @@
                 </Setter>
                 <Setter Property="TextColor">
                     <OnPlatform x:TypeArguments="Color">
-                        <On Platform="iOS" Value="White" />
-                        <On Platform="Android" Value="White" />
+                        <On Platform="iOS" Value="{DynamicResource PrimaryColor}" />
+                        <On Platform="Android" Value="{DynamicResource PrimaryColor}" />
                     </OnPlatform>
                 </Setter>
                 <Setter Property="PlaceholderColor">
@@ -477,76 +477,82 @@
                     VerticalOptions="Center" />
             </StackLayout>
         </StackLayout>-->
-        <Grid Grid.Row="4" Margin="0,0,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <!--  Define a altura automática para cada linha  -->
-                <RowDefinition Height="Auto" />
-                <!--  Define a altura automática para a segunda linha  -->
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40" />
-                <!--  Primeira coluna com tamanho automático para as imagens  -->
-                <ColumnDefinition Width="Auto" />
-                <!--  Segunda coluna para a primeira label  -->
-                <ColumnDefinition />
-                <!--  Terceira coluna para a segunda label  -->
-            </Grid.ColumnDefinitions>
-            <!--  Primeira linha  -->
-            <Image
-                Grid.Row="0"
-                Grid.Column="0"
-                Source="weather/weather_icons_70_sun_up.svg" />
-            <Label
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="10,0"
-                FontAttributes="Bold"
-                FontSize="Small"
-                Text="Time of Sunrise"
-                TextColor="Black"
-                VerticalOptions="Center" />
-            <Label
-                x:Name="SunriseDateTime"
-                Grid.Row="0"
-                Grid.Column="2"
-                FontSize="Small"
-                Text="{Binding Sys.Sunrise, Converter={StaticResource LongToDatetimeConverter}}"
-                TextColor="Black"
-                VerticalOptions="Center" />
-
-            <!--  Segunda linha  -->
-            <Image
-                Grid.Row="1"
-                Grid.Column="0"
-                Source="weather/weather_icons_69_sun_down.svg" />
-            <Label
-                x:Name="SunsetDateTime"
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="10,0"
-                FontAttributes="Bold"
-                FontSize="Small"
-                Text="Time of Sunset"
-                TextColor="Black"
-                VerticalOptions="Center" />
-            <Label
-                Grid.Row="1"
-                Grid.Column="2"
-                FontSize="Small"
-                Text="{Binding Sys.Sunset, Converter={StaticResource LongToDatetimeConverter}}"
-                TextColor="Black"
-                VerticalOptions="Center" />
-        </Grid>
 
 
-        <StackLayout
+        <HorizontalStackLayout
+            Grid.Row="4"
+            Margin="0"
+            HorizontalOptions="FillAndExpand">
+
+            <Grid Margin="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <!--  Primeira linha  -->
+                <Image
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Source="weather/weather_icons_70_sun_up.svg" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="10,0"
+                    FontAttributes="Bold"
+                    FontSize="Small"
+                    Text="Time of Sunrise"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Label
+                    x:Name="SunriseDateTime"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    FontSize="Small"
+                    Text="{Binding Sys.Sunrise, Converter={StaticResource LongToDatetimeConverter}}"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+
+                <!--  Segunda linha  -->
+                <Image
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Source="weather/weather_icons_69_sun_down.svg" />
+                <Label
+                    x:Name="SunsetDateTime"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="10,0"
+                    FontAttributes="Bold"
+                    FontSize="Small"
+                    Text="Time of Sunset"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    FontSize="Small"
+                    Text="{Binding Sys.Sunset, Converter={StaticResource LongToDatetimeConverter}}"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+            </Grid>
+        </HorizontalStackLayout>
+
+
+        <HorizontalStackLayout
             Grid.Row="5"
             Margin="0"
-            HorizontalOptions="StartAndExpand"
-            Orientation="Horizontal">
+            HorizontalOptions="FillAndExpand">
 
             <Grid ColumnSpacing="10" RowSpacing="10">
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -561,6 +567,8 @@
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
                     IsVisible="False">
+                    
+                    <!--TextColor="{StaticResource EntryStyle}"-->
                     <Entry
                         x:Name="CityEntry"
                         BackgroundColor="{StaticResource EntryStyle}"
@@ -568,12 +576,12 @@
                         HorizontalTextAlignment="Center"
                         Placeholder="Type the name of city"
                         PlaceholderColor="{StaticResource EntryStyle}"
-                        TextColor="{StaticResource EntryStyle}"
                         VerticalOptions="Center" />
 
                     <!--  Grid.Column="1"  -->
                     <Button
                         x:Name="GetWeatherButton"
+                        Grid.Column="1"
                         BackgroundColor="{StaticResource EntryStyle}"
                         BorderColor="White"
                         BorderWidth="1"
@@ -588,6 +596,8 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
+
+                    <!--TextColor="{StaticResource EntryStyle}"-->
                     <Entry
                         x:Name="CityGeoCodingEntry"
                         BackgroundColor="{StaticResource EntryStyle}"
@@ -595,12 +605,12 @@
                         HorizontalTextAlignment="Center"
                         Placeholder="Type the name of city"
                         PlaceholderColor="{StaticResource EntryStyle}"
-                        TextColor="{StaticResource EntryStyle}"
                         VerticalOptions="Center" />
 
                     <!--  Grid.Column="1"  -->
                     <Button
                         x:Name="GetCitiesGeoCodingButton"
+                        Grid.Column="1"
                         BackgroundColor="{StaticResource EntryStyle}"
                         BorderColor="White"
                         BorderWidth="1"
@@ -611,14 +621,14 @@
 
             </Grid>
 
-        </StackLayout>
+        </HorizontalStackLayout>
 
 
         <StackLayout
             Grid.Row="6"
             Margin="0,20"
             HorizontalOptions="StartAndExpand"
-            Orientation="Horizontal">
+            Orientation="Horizontal"            >
 
             <!--  IsVisible="false"  -->
             <ListView
@@ -631,16 +641,16 @@
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
                                 <Label
-                                    FontAttributes="Italic"
-                                    FontSize="Small"
+                                    FontAttributes="None"
+                                    FontSize="Default"
                                     Text="{Binding Name}" />
                                 <Label
                                     FontAttributes="None"
                                     FontSize="Small"
                                     Text=" - " />
                                 <Label
-                                    FontAttributes="None"
-                                    FontSize="Small"
+                                    FontAttributes="Italic"
+                                    FontSize="Default"
                                     Text="{Binding State}" />
                                 <Label
                                     FontAttributes="Bold"
@@ -648,7 +658,7 @@
                                     Text=" (" />
                                 <Label
                                     FontAttributes="Bold"
-                                    FontSize="Small"
+                                    FontSize="Default"
                                     Text="{Binding Country}" />
                                 <Label
                                     FontAttributes="Bold"

@@ -44,6 +44,16 @@ public partial class WeatherMainPage : ContentPage, IDisposable
 
         // Agora, acione o evento manualmente
         OnGetWeatherButtonClicked(GetWeatherButton, EventArgs.Empty);
+
+
+        // Para acionar automaticamente o botão quando o usuário pressionar "Enter" no teclado virtual após preencher o campo Entry,
+        // você precisa adicionar um manipulador de eventos ao evento "Completed" do Entry,
+        // que será responsável por acionar o botão.
+        // No seu código, o Entry que você mencionou é chamado CityGeoCodingEntry,
+        // e o botão é chamado GetCitiesGeoCodingButton.
+        // Aqui está como você pode fazer isso:
+        CityGeoCodingEntry.Completed += OnCityGeoCodingEntryCompleted;
+        GetWeatherButton.Clicked += OnGetWeatherButtonClicked;
     }
 
 
@@ -51,6 +61,19 @@ public partial class WeatherMainPage : ContentPage, IDisposable
     void IDisposable.Dispose()
     {
         Application.Current.Quit();
+    }
+
+
+    private void OnCityGeoCodingEntryCompleted(object sender, EventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(CityGeoCodingEntry.Text))
+            return;
+
+        // Chamando o evento de clique do botão diretamente
+        OnGetGeoCodingCitiesButtonClicked(this, EventArgs.Empty);
+
+        // Hide the list view again
+        CityListView.IsVisible = false;
     }
 
 
@@ -240,17 +263,4 @@ public partial class WeatherMainPage : ContentPage, IDisposable
     }
 
 
-    private void OnAboutClicked(object sender, EventArgs e)
-    {
-        Navigation.PushAsync(new AboutPage());
-    }
-
-
-    /// <summary>
-    /// </summary>
-    public class MenuItem
-    {
-        public string Title { get; set; }
-        public string Icon { get; set; }
-    }
 }

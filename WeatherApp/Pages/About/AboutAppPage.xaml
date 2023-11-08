@@ -21,7 +21,7 @@
         <!--  Adicione a última imagem em uma Frame redonda  -->
         <!--  BackgroundColor="White"  -->
         <Frame
-            Margin="0,-300,0,0"
+            Margin="0,-280,0,10"
             BorderColor="Transparent"
             CornerRadius="50"
             HorizontalOptions="Center"
@@ -31,7 +31,7 @@
             <!--  Source="appiconfg_other.svg"  -->
             <Image
                 HeightRequest="100"
-                Source="appiconfg.svg"
+                Source="mobile_weather_app.svg"
                 WidthRequest="100" />
 
         </Frame>

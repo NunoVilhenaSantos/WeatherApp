@@ -11,21 +11,22 @@
 
 
     <FlyoutItem Title="Weather" Icon="weather.svg">
-        <ShellContent
-            Title="Home"
-            ContentTemplate="{DataTemplate local:MainPage}"
-            Icon="dotnet_bot_icon.svg" />
-
         <!--  Route="MainPage"  -->
         <ShellContent
             Title="Weather"
             ContentTemplate="{DataTemplate weatherApp:WeatherMainPage}"
-            Icon="weather_other_icon.svg" />
+            Icon="mobile_weather_app.svg" />
+
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Icon="dotnet_bot_image.svg" />
+
 
         <ShellContent
             Title="Weather Details"
             ContentTemplate="{DataTemplate weatherApp:WeatherDetailsPage}"
-            Icon="weather_other_icon.svg" />
+            Icon="weather_2_round.svg" />
 
     </FlyoutItem>
 
@@ -44,12 +45,15 @@
     </FlyoutItem>
 
 
-    <FlyoutItem Title="Weather Main" Icon="weather_other_icon.svg">
+    <FlyoutItem
+        Title="Weather Main"
+        FlyoutIcon="weather_other_icon.svg"
+        Icon="mobile_weather_app.svg">
         <ShellContent ContentTemplate="{DataTemplate weatherApp:WeatherMainPage}" />
     </FlyoutItem>
 
 
-    <FlyoutItem Title="Weather Details" Icon="weather_other_icon.svg">
+    <FlyoutItem Title="Weather Details" Icon="weather_2_round.svg">
         <ShellContent ContentTemplate="{DataTemplate weatherApp:WeatherDetailsPage}" />
     </FlyoutItem>
 
