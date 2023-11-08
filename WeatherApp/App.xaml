@@ -1,9 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 
 <Application
     x:Class="WeatherApp.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:WeatherApp"
+    xmlns:weatherApp="clr-namespace:WeatherApp">
 
 
     <Application.Resources>
@@ -33,11 +35,16 @@
                 <Setter Property="Padding" Value="15,10" />
             </Style>
 
-
         </ResourceDictionary>
 
-
     </Application.Resources>
+
+
+    <!--
+    <Application.MainPage>
+        <weatherApp:WeatherMainPage />
+    </Application.MainPage>
+    -->
 
 
 </Application>

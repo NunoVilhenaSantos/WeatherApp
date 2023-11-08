@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Shell
     x:Class="WeatherApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:WeatherApp"
     xmlns:weatherApp="clr-namespace:WeatherApp"
     FlyoutBehavior="Flyout"
     FlyoutVerticalScrollMode="Auto">
@@ -12,19 +13,19 @@
     <FlyoutItem Title="Weather" Icon="weather.svg">
         <ShellContent
             Title="Home"
-            ContentTemplate="{DataTemplate weatherApp:MainPage}"
-            Icon="dotnet_bot.svg" />
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Icon="dotnet_bot_icon.svg" />
 
         <!--  Route="MainPage"  -->
         <ShellContent
             Title="Weather"
             ContentTemplate="{DataTemplate weatherApp:WeatherMainPage}"
-            Icon="appiconfg_other.svg" />
+            Icon="weather_other_icon.svg" />
 
         <ShellContent
             Title="Weather Details"
             ContentTemplate="{DataTemplate weatherApp:WeatherDetailsPage}"
-            Icon="appiconfg.svg" />
+            Icon="weather_other_icon.svg" />
 
     </FlyoutItem>
 
@@ -43,12 +44,12 @@
     </FlyoutItem>
 
 
-    <FlyoutItem Title="Weather Main" Icon="appiconfg.svg">
+    <FlyoutItem Title="Weather Main" Icon="weather_other_icon.svg">
         <ShellContent ContentTemplate="{DataTemplate weatherApp:WeatherMainPage}" />
     </FlyoutItem>
 
 
-    <FlyoutItem Title="Weather Details" Icon="appiconfg.svg">
+    <FlyoutItem Title="Weather Details" Icon="weather_other_icon.svg">
         <ShellContent ContentTemplate="{DataTemplate weatherApp:WeatherDetailsPage}" />
     </FlyoutItem>
 

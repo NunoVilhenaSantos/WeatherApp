@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="WeatherApp.WeatherMainPage"
@@ -15,6 +15,7 @@
         <ResourceDictionary>
 
             <converters:FahrenheitCelsiusConverter x:Key="FahrenheitToCelsiusConverter" />
+            <converters:FahrenheitKelvinConverter x:Key="FahrenheitToKelvinConverter" />
             <converters:LongToDateTimeConverter x:Key="LongToDatetimeConverter" />
             <converters:StringToImageConverter x:Key="StringToImageConverter" />
 
@@ -41,6 +42,7 @@
             </Style>
 
         </ResourceDictionary>
+
     </ContentPage.Resources>
 
 
@@ -81,6 +83,7 @@
                     TextColor="White"
                     VerticalOptions="Center" />
                 <Label
+                    FontAttributes="Bold"
                     FontSize="Default"
                     Text="{Binding Sys.Country, StringFormat=', {0}'}"
                     TextColor="White"
@@ -89,45 +92,88 @@
 
         </StackLayout>
 
+
         <StackLayout
             Grid.Row="1"
             Margin="0,0"
             HorizontalOptions="EndAndExpand"
             Orientation="Vertical"
-            Spacing="10"
             VerticalOptions="Start">
 
-            <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+            <StackLayout
+                HorizontalOptions="EndAndExpand"
+                Orientation="Horizontal"
+                Spacing="5">
+
+                <!--  BackgroundColor="Transparent"  -->
+                <!--
                 <Frame
                     Padding="5"
-                    BackgroundColor="Transparent"
+                    BackgroundColor="{DynamicResource PrimaryColor}"
+                    BorderColor="{DynamicResource PrimaryColor}"
                     CornerRadius="25">
                     <Button
-                        x:Name="ButtonCelsius"
+                        x:Name="ButtonCelsius1"
+                        Padding="5"
+                        BorderWidth="0"
                         Clicked="OnCelsiusButtonClicked"
+                        CornerRadius="25"
                         Text="ºC"
                         TextColor="White" />
                 </Frame>
                 <Frame
                     Padding="5"
-                    BackgroundColor="Transparent"
+                    BackgroundColor="{DynamicResource PrimaryColor}"
+                    BorderColor="{DynamicResource PrimaryColor}"
                     CornerRadius="25">
                     <Button
-                        x:Name="ButtonFahrenheit"
+                        x:Name="ButtonFahrenheit1"
+                        Padding="5"
+                        BorderWidth="0"
                         Clicked="OnFahrenheitButtonClicked"
+                        CornerRadius="25"
                         Text="ºF"
                         TextColor="White" />
                 </Frame>
                 <Frame
                     Padding="5"
-                    BackgroundColor="Transparent"
+                    BackgroundColor="{DynamicResource PrimaryColor}"
+                    BorderColor="{DynamicResource PrimaryColor}"
                     CornerRadius="25">
                     <Button
-                        x:Name="ButtonKelvin"
+                        x:Name="ButtonKelvin1"
+                        Padding="5"
+                        BorderWidth="0"
                         Clicked="OnKelvinButtonClicked"
+                        CornerRadius="25"
                         Text="ºK"
                         TextColor="White" />
                 </Frame>
+                -->
+
+
+                <Button
+                    x:Name="ButtonCelsius"
+                    Padding="10"
+                    Clicked="OnCelsiusButtonClicked"
+                    CornerRadius="20"
+                    Text="ºC"
+                    TextColor="White" />
+                <Button
+                    x:Name="ButtonFahrenheit"
+                    Padding="10"
+                    Clicked="OnFahrenheitButtonClicked"
+                    CornerRadius="20"
+                    Text="ºF"
+                    TextColor="White" />
+                <Button
+                    x:Name="ButtonKelvin"
+                    Padding="10"
+                    Clicked="OnKelvinButtonClicked"
+                    CornerRadius="20"
+                    Text="ºK"
+                    TextColor="White" />
+
             </StackLayout>
         </StackLayout>
 
@@ -538,7 +584,10 @@
                 </HorizontalStackLayout>
 
 
-                <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0">
+                <HorizontalStackLayout
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2">
                     <Entry
                         x:Name="CityGeoCodingEntry"
                         BackgroundColor="{StaticResource EntryStyle}"

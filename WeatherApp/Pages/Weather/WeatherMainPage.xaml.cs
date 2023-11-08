@@ -1,4 +1,5 @@
-﻿using WeatherApp.Converters;
+﻿using Microsoft.Maui.Animations;
+using WeatherApp.Converters;
 using WeatherApp.Data;
 using WeatherApp.Services;
 
@@ -63,7 +64,7 @@ public partial class WeatherMainPage : ContentPage, IDisposable
 
         _weatherData = weatherData;
 
-        BindingContext = _weatherData;
+        BindingContext = _weatherData;       
     }
 
 
@@ -135,8 +136,8 @@ public partial class WeatherMainPage : ContentPage, IDisposable
     }
 
 
-    private async void OnGetWeatherLatLonButtonClicked(object sender,
-        EventArgs e)
+    private async void OnGetWeatherLatLonButtonClicked(
+        object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(CityEntry.Text)) return;
 
@@ -147,6 +148,9 @@ public partial class WeatherMainPage : ContentPage, IDisposable
         _weatherData = weatherData;
 
         BindingContext = _weatherData;
+
+
+        UpdateTemperatureDisplay("Celsius");
     }
 
 

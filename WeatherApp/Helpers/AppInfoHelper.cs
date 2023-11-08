@@ -8,6 +8,6 @@ internal class AppInfoHelper
     {
         var assembly = Assembly.GetExecutingAssembly();
         var assemblyName = assembly.GetName();
-        return assemblyName.Version.ToString();
+        return assemblyName?.Version?.ToString() ?? string.Empty;
     }
 }
