@@ -19,7 +19,7 @@ public class LongToDateTimeConverter : IValueConverter
     public object Convert(
         object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var dateTime = (long)value;
+        var dateTime = (long) value;
 
         return $"{_time.AddSeconds(dateTime).ToString(culture)} UTC";
     }
@@ -47,6 +47,6 @@ public class LongToDateTimeConverter : IValueConverter
 
         var timeDifference = dateTime - _time;
 
-        return (long)timeDifference.TotalSeconds;
+        return (long) timeDifference.TotalSeconds;
     }
 }

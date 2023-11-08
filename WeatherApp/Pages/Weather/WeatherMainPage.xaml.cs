@@ -1,6 +1,5 @@
 ﻿using WeatherApp.Converters;
 using WeatherApp.Data;
-using WeatherApp.Helpers;
 using WeatherApp.Services;
 
 namespace WeatherApp;
@@ -8,25 +7,22 @@ namespace WeatherApp;
 /// <inheritdoc cref="Microsoft.Maui.Controls.ContentPage" />
 public partial class WeatherMainPage : ContentPage, IDisposable
 {
-
     // converters
     private readonly FahrenheitCelsiusConverter _fahrenheitCelsiusConverter;
-
-
-
-    // Restapi service
-    private readonly RestService _restService;
 
 
     // Variável para rastrear a unidade de temperatura
     private readonly bool _isCelsius = true;
 
 
+    // Restapi service
+    private readonly RestService _restService;
+    private WeatherCities _selectedCity;
+
+
     // classes
     private List<WeatherCities> _weatherCities;
     private WeatherData _weatherData;
-    private WeatherCities _selectedCity;
-
 
 
     /// <inheritdoc />
@@ -56,8 +52,6 @@ public partial class WeatherMainPage : ContentPage, IDisposable
         Application.Current.Quit();
     }
 
-
-    
 
     private async void OnGetWeatherButtonClicked(object sender, EventArgs e)
     {
@@ -112,7 +106,6 @@ public partial class WeatherMainPage : ContentPage, IDisposable
     }
 
 
-
     private void OnCitySelected(object sender, SelectedItemChangedEventArgs e)
     {
         if (e.SelectedItem is not WeatherCities selectedCity) return;
@@ -124,7 +117,7 @@ public partial class WeatherMainPage : ContentPage, IDisposable
         // for example, display it in an Entry field.
         //CityGeoCodingEntry.Text = 
         //    selectedCity.Name + ", " + selectedCity.Country;
-        
+
         CityEntry.Text =
             selectedCity.Name + ", " + selectedCity.Country;
 
@@ -142,8 +135,8 @@ public partial class WeatherMainPage : ContentPage, IDisposable
     }
 
 
-
-    private async void OnGetWeatherLatLonButtonClicked(object sender, EventArgs e)
+    private async void OnGetWeatherLatLonButtonClicked(object sender,
+        EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(CityEntry.Text)) return;
 
@@ -155,8 +148,6 @@ public partial class WeatherMainPage : ContentPage, IDisposable
 
         BindingContext = _weatherData;
     }
-
-
 
 
     private string GenerateRequestUrlLatLon(string endPoint)

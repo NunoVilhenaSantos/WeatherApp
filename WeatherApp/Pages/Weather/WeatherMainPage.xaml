@@ -1,11 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="WeatherApp.WeatherMainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:WeatherApp.Converters"
-    xmlns:helpers="clr-namespace:WeatherApp.Helpers"
     Title="Weather Main Page"
     BackgroundColor="{DynamicResource SecondaryColor}">
 
@@ -43,8 +42,6 @@
 
         </ResourceDictionary>
     </ContentPage.Resources>
-
-
 
 
     <!--  Conteúdo da página principal  -->
@@ -516,11 +513,10 @@
 
                 <HorizontalStackLayout
                     Grid.Row="0"
-                    Grid.RowSpan="1"
+                    Grid.ColumnSpan="2"
                     IsVisible="False">
                     <Entry
                         x:Name="CityEntry"
-                        Grid.Column="0"
                         BackgroundColor="{StaticResource EntryStyle}"
                         CharacterSpacing="4"
                         HorizontalTextAlignment="Center"
@@ -542,10 +538,9 @@
                 </HorizontalStackLayout>
 
 
-                <HorizontalStackLayout Grid.Row="1" Grid.RowSpan="1">
+                <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0">
                     <Entry
                         x:Name="CityGeoCodingEntry"
-                        Grid.Column="0"
                         BackgroundColor="{StaticResource EntryStyle}"
                         CharacterSpacing="4"
                         HorizontalTextAlignment="Center"

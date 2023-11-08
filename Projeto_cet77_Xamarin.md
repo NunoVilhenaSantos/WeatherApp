@@ -1,133 +1,52 @@
-+------------+-----+---+-------------+---+-------------------------------+
-| > **TEMA/  | >   | * |             | > |                               |
-| DOMÍNIO:** |  ** | * |             |   |                               |
-|            | UFC | - |             | * |                               |
-|            | D** | - |             | * |                               |
-|            |     | * |             | T |                               |
-|            |     | * |             | R |                               |
-|            |     |   |             | A |                               |
-|            |     |   |             | B |                               |
-|            |     |   |             | A |                               |
-|            |     |   |             | L |                               |
-|            |     |   |             | H |                               |
-|            |     |   |             | O |                               |
-|            |     |   |             | > |                               |
-|            |     |   |             |   |                               |
-|            |     |   |             | D |                               |
-|            |     |   |             | E |                               |
-|            |     |   |             | > |                               |
-|            |     |   |             |   |                               |
-|            |     |   |             | A |                               |
-|            |     |   |             | V |                               |
-|            |     |   |             | A |                               |
-|            |     |   |             | L |                               |
-|            |     |   |             | I |                               |
-|            |     |   |             | A |                               |
-|            |     |   |             | Ç |                               |
-|            |     |   |             | Ã |                               |
-|            |     |   |             | O |                               |
-|            |     |   |             | * |                               |
-|            |     |   |             | * |                               |
-+============+=====+===+=============+===+===============================+
-| > **54     | >   | * |             |   |                               |
-| 23Acesso** | **M | * |             |   |                               |
-|            | óve | a |             |   |                               |
-|            | l** | * |             |   |                               |
-|            |     | * |             |   |                               |
-+------------+-----+---+-------------+---+-------------------------------+
-| >          |     | * |             |   |                               |
-| **Sistemas |     | * |             |   |                               |
-| > de       |     | - |             |   |                               |
-| > In       |     | - |             |   |                               |
-| formação** |     | * |             |   |                               |
-|            |     | * |             |   |                               |
-+------------+-----+---+-------------+---+-------------------------------+
-| > **CET    |     |   |             |   |                               |
-| > 77**     |     |   |             |   |                               |
-+------------+-----+---+-------------+---+-------------------------------+
-|            |     |   |             |   |                               |
-+------------+-----+---+-------------+---+-------------------------------+
-| > **LOCAL: |     |   | > **DATA:   |   | > **FORMADOR: Rafael Santos** |
-| > CINE     |     |   | > 1         |   |                               |
-| L-Lisboa** |     |   | 4-09-2023** |   |                               |
-+------------+-----+---+-------------+---+-------------------------------+
-|            |     |   |             |   |                               |
-+------------+-----+---+-------------+---+-------------------------------+
+# WeatherApp
 
-No âmbito da unidade de formação de Acesso Móvel a Sistemas de
-Informação propõem-se a **conceção de uma aplicação móvel que permita
-saber as condições meteorológicas em várias cidades do mundo inteiro,**
-usando Xamarin.
+## Trabalho de Avaliação
 
--   A referida aplicação deverá:
+| TEMA / DOMÍNIO:                                   |
+|---------------------------------------------------| 
+| UFCD 5423 - Acesso Móvel a Sistemas de Informação |
 
-o.  Correr em Android e iOS.
+| LOCAL          | DATA       | FORMADOR      |
+|----------------|------------|---------------|
+| CINEL - Lisboa | 14-09-2023 | Rafael Santos |
 
-```{=html}
-<!-- -->
-```
-o.  Permitir um login através de uma api para utilizadores que se
-    deverão registar através de um website.
+**No âmbito da unidade de formação de Acesso Móvel a Sistemas de Informação propõem-se a conceção de uma aplicação móvel que permita saber as condições meteorológicas em várias cidades do mundo inteiro, usando Xamarin.**
 
-```{=html}
-<!-- -->
-```
-o.  Usar uma api que devolva as condições meteorológicas do mundo
-    inteiro, por exemplo, **http://openweathermap.org/**.
+## A referida aplicação deverá:
 
-```{=html}
-<!-- -->
-```
-o.  Apresentar uma lista de items (cidades ou países) para depois
-    apresentar mais detalhadamente o item escolhido pelo utilizador.
+- Correr em Android e iOS.
 
-```{=html}
-<!-- -->
-```
-o.  Criar um menu por forma a que apareçam 4 opções á sua escolha
-    (incluindo a opção sobre).
+- Permitir um login através de uma api para utilizadores que se deverão registar através de um website.
 
-```{=html}
-<!-- -->
-```
-o.  Usar imagens sempre que possível tornando a interface mais atrativa.
+- Usar uma api que devolva as condições meteorológicas do mundo inteiro, por exemplo, http://openweathermap.org/.
 
-```{=html}
-<!-- -->
-```
-o.  Ter uma página onde aparecerá o autor, versão e data da app.
+- Apresentar uma lista de items (cidades ou países) para depois apresentar mais detalhadamente o item escolhido pelo
+  utilizador.
 
-**Parâmetros de Avaliação**
+- Criar um menu por forma a que apareçam 4 opções á sua escolha (incluindo a opção sobre).
 
--   Aplicação usa o Xamarin.
+- Usar imagens sempre que possível tornando a interface mais atrativa.
 
--   Autenticação aplicada.
+- Ter uma página onde aparecerá o autor, versão e data da app.
 
--   Quantidade/detalhe de dados tratados provenientes da API referida
-    anteriormente.
+## Parâmetros de Avaliação
 
--   Interface intuitivo, fácil de utilizar sem necessitar de explicação.
+- Aplicação usa o Xamarin.
 
-![](media/image1.png){width="6.93125in" height="6.944444444444444e-3in"}
+- Autenticação aplicada.
 
-> Página **1** de **2**
+- Quantidade/detalhe de dados tratados provenientes da API referida anteriormente.
 
--   Todas as validações necessárias feitas.
+- Interface intuitivo, fácil de utilizar sem necessitar de explicação.
 
--   Módulo de créditos onde deverá constar o autor do projeto, data e
-    versão.
+- Todas as validações necessárias feitas.
 
--   Apresentação em vídeo.
+- Módulo de créditos onde deverá constar o autor do projeto, data e versão.
 
--   **Para valores iguais ou superiores a 16 deverão ser implementadas
-    funcionalidades extra. (Autenticação por exemplo)**
+- Apresentação em vídeo.
 
--   **Não será aceite a entrega fora do prazo estipulado.**
+**Para valores iguais ou superiores a 16 deverão ser implementadas funcionalidades extra. (Autenticação por exemplo)**
 
-**Calendarização**
+### Calendarização
 
--   Entrega -- 31/10/2023
-
-![](media/image1.png){width="6.93125in" height="6.944444444444444e-3in"}
-
-Página **2** de **2**
+- Entrega - 31/10/2023

@@ -1,37 +1,32 @@
-﻿namespace WeatherApp
+﻿namespace WeatherApp;
+
+public partial class MainPage : ContentPage, IDisposable
 {
-    public partial class MainPage : ContentPage, IDisposable
+    private int count;
+
+
+    public MainPage()
     {
-        int count = 0;
-
-        
-        
-        public MainPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
 
-        /// <inheritdoc />
-        void IDisposable.Dispose()
-        {
-            Application.Current.Quit();
-        }
+    /// <inheritdoc />
+    void IDisposable.Dispose()
+    {
+        Application.Current.Quit();
+    }
 
 
+    private void OnCounterClicked(object sender, EventArgs e)
+    {
+        count++;
 
+        if (count == 1)
+            CounterBtn.Text = $"Clicked {count} time";
+        else
+            CounterBtn.Text = $"Clicked {count} times";
 
-
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
+        SemanticScreenReader.Announce(CounterBtn.Text);
     }
 }

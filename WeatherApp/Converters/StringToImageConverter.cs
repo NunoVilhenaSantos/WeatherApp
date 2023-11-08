@@ -16,7 +16,7 @@ internal class StringToImageConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter,
         CultureInfo culture)
     {
-        var icon = (string)value;
+        var icon = (string) value;
 
         return Constants.IconUrlPrefix + icon + "@2x.png";
     }

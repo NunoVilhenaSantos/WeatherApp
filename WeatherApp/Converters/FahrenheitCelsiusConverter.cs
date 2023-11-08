@@ -16,7 +16,7 @@ public class FahrenheitCelsiusConverter : IValueConverter
     public object Convert(
         object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var fahrenheit = (double)value;
+        var fahrenheit = (double) value;
         var celsius = 0.00;
 
         if (!Equals(fahrenheit, null))
@@ -37,7 +37,7 @@ public class FahrenheitCelsiusConverter : IValueConverter
         object value, Type targetType, object parameter, CultureInfo culture)
     {
         var fahrenheit = 0.00;
-        var celsius = (double)value;
+        var celsius = (double) value;
 
         if (!Equals(celsius, null))
             fahrenheit = celsius * 9 / 5 + 32;
