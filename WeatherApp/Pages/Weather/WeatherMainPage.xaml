@@ -31,12 +31,14 @@
                     <OnPlatform x:TypeArguments="Color">
                         <On Platform="iOS" Value="{DynamicResource PrimaryColor}" />
                         <On Platform="Android" Value="{DynamicResource PrimaryColor}" />
+                        <On Platform="Windows" Value="{DynamicResource PrimaryColor}" />
                     </OnPlatform>
                 </Setter>
                 <Setter Property="PlaceholderColor">
                     <OnPlatform x:TypeArguments="Color">
                         <On Platform="iOS" Value="White" />
                         <On Platform="Android" Value="White" />
+                        <On Platform="Windows" Value="White" />
                     </OnPlatform>
                 </Setter>
             </Style>
@@ -567,8 +569,8 @@
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
                     IsVisible="False">
-                    
-                    <!--TextColor="{StaticResource EntryStyle}"-->
+
+                    <!--  TextColor="{StaticResource EntryStyle}"  -->
                     <Entry
                         x:Name="CityEntry"
                         BackgroundColor="{StaticResource EntryStyle}"
@@ -597,7 +599,7 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
 
-                    <!--TextColor="{StaticResource EntryStyle}"-->
+                    <!--  TextColor="{StaticResource EntryStyle}"  -->
                     <Entry
                         x:Name="CityGeoCodingEntry"
                         BackgroundColor="{StaticResource EntryStyle}"
@@ -628,7 +630,7 @@
             Grid.Row="6"
             Margin="0,20"
             HorizontalOptions="StartAndExpand"
-            Orientation="Horizontal"            >
+            Orientation="Horizontal">
 
             <!--  IsVisible="false"  -->
             <ListView
