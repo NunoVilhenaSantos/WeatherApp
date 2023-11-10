@@ -5,7 +5,7 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Utilities } from '../services/utilities';
+import {Utilities} from '../services/utilities';
 
 
 export class Notification {

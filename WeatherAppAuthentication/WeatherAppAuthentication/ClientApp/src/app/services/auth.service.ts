@@ -5,31 +5,26 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Injectable } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {NavigationExtras, Router} from '@angular/router';
+import {Observable, Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
 
-import { LocalStoreManager } from './local-store-manager.service';
-import { OidcHelperService } from './oidc-helper.service';
-import { ConfigurationService } from './configuration.service';
-import { DBkeys } from './db-keys';
-import { JwtHelper } from './jwt-helper';
-import { Utilities } from './utilities';
-import { IdToken, LoginResponse } from '../models/login-response.model';
-import { User } from '../models/user.model';
-import { PermissionValues } from '../models/permission.model';
+import {LocalStoreManager} from './local-store-manager.service';
+import {OidcHelperService} from './oidc-helper.service';
+import {ConfigurationService} from './configuration.service';
+import {DBkeys} from './db-keys';
+import {JwtHelper} from './jwt-helper';
+import {Utilities} from './utilities';
+import {IdToken, LoginResponse} from '../models/login-response.model';
+import {User} from '../models/user.model';
+import {PermissionValues} from '../models/permission.model';
 
 @Injectable()
 export class AuthService {
-  public get loginUrl() { return this.configurations.loginUrl; }
-  public get homeUrl() { return this.configurations.homeUrl; }
-
   public loginRedirectUrl: string | null = null;
   public logoutRedirectUrl: string | null = null;
-
   public reLoginDelegate: { (): void } | undefined;
-
   private previousIsLoggedInCheck = false;
   private loginStatus = new Subject<boolean>();
 
@@ -42,10 +37,47 @@ export class AuthService {
     this.initializeLoginStatus();
   }
 
-  private initializeLoginStatus() {
-    this.localStorage.getInitEvent().subscribe(() => {
-      this.reevaluateLoginStatus();
-    });
+  public get loginUrl() {
+    return this.configurations.loginUrl;
+  }
+
+  public get homeUrl() {
+    return this.configurations.homeUrl;
+  }
+
+  get currentUser(): User | null {
+    const user = this.localStorage.getDataObject<User>(DBkeys.CURRENT_USER);
+    this.reevaluateLoginStatus(user);
+
+    return user;
+  }
+
+  get userPermissions(): PermissionValues[] {
+    return this.localStorage.getDataObject<PermissionValues[]>(DBkeys.USER_PERMISSIONS) ?? [];
+  }
+
+  get accessToken(): string | null {
+    return this.oidcHelperService.accessToken;
+  }
+
+  get accessTokenExpiryDate(): Date | null {
+    return this.oidcHelperService.accessTokenExpiryDate;
+  }
+
+  get refreshToken(): string | null {
+    return this.oidcHelperService.refreshToken;
+  }
+
+  get isSessionExpired(): boolean {
+    return this.oidcHelperService.isSessionExpired;
+  }
+
+  get isLoggedIn(): boolean {
+    return this.currentUser != null;
+  }
+
+  get rememberMe(): boolean {
+    return this.localStorage.getDataObject<boolean>(DBkeys.REMEMBER_ME) === true;
   }
 
   gotoPage(page: string, preserveParams = true) {
@@ -62,7 +94,7 @@ export class AuthService {
 
   redirectLoginUser() {
     const redirect = this.loginRedirectUrl && this.loginRedirectUrl !== '/' &&
-      this.loginRedirectUrl !== ConfigurationService.defaultHomeUrl ? this.loginRedirectUrl : this.homeUrl;
+    this.loginRedirectUrl !== ConfigurationService.defaultHomeUrl ? this.loginRedirectUrl : this.homeUrl;
     this.loginRedirectUrl = null;
 
     const urlParamsAndFragment = Utilities.splitInTwo(redirect, '#');
@@ -109,6 +141,28 @@ export class AuthService {
 
     return this.oidcHelperService.loginWithPassword(userName, password)
       .pipe(map(resp => this.processLoginResponse(resp, rememberMe)));
+  }
+
+  logout(): void {
+    this.localStorage.deleteData(DBkeys.ACCESS_TOKEN);
+    this.localStorage.deleteData(DBkeys.REFRESH_TOKEN);
+    this.localStorage.deleteData(DBkeys.TOKEN_EXPIRES_IN);
+    this.localStorage.deleteData(DBkeys.USER_PERMISSIONS);
+    this.localStorage.deleteData(DBkeys.CURRENT_USER);
+
+    this.configurations.clearLocalChanges();
+
+    this.reevaluateLoginStatus();
+  }
+
+  getLoginStatusEvent(): Observable<boolean> {
+    return this.loginStatus.asObservable();
+  }
+
+  private initializeLoginStatus() {
+    this.localStorage.getInitEvent().subscribe(() => {
+      this.reevaluateLoginStatus();
+    });
   }
 
   private processLoginResponse(response: LoginResponse, rememberMe?: boolean) {
@@ -175,18 +229,6 @@ export class AuthService {
     this.localStorage.savePermanentData(rememberMe, DBkeys.REMEMBER_ME);
   }
 
-  logout(): void {
-    this.localStorage.deleteData(DBkeys.ACCESS_TOKEN);
-    this.localStorage.deleteData(DBkeys.REFRESH_TOKEN);
-    this.localStorage.deleteData(DBkeys.TOKEN_EXPIRES_IN);
-    this.localStorage.deleteData(DBkeys.USER_PERMISSIONS);
-    this.localStorage.deleteData(DBkeys.CURRENT_USER);
-
-    this.configurations.clearLocalChanges();
-
-    this.reevaluateLoginStatus();
-  }
-
   private reevaluateLoginStatus(currentUser?: User | null) {
     const user = currentUser ?? this.localStorage.getDataObject<User>(DBkeys.CURRENT_USER);
     const isLoggedIn = user != null;
@@ -198,44 +240,5 @@ export class AuthService {
     }
 
     this.previousIsLoggedInCheck = isLoggedIn;
-  }
-
-  getLoginStatusEvent(): Observable<boolean> {
-    return this.loginStatus.asObservable();
-  }
-
-  get currentUser(): User | null {
-    const user = this.localStorage.getDataObject<User>(DBkeys.CURRENT_USER);
-    this.reevaluateLoginStatus(user);
-
-    return user;
-  }
-
-  get userPermissions(): PermissionValues[] {
-    return this.localStorage.getDataObject<PermissionValues[]>(DBkeys.USER_PERMISSIONS) ?? [];
-  }
-
-  get accessToken(): string | null {
-    return this.oidcHelperService.accessToken;
-  }
-
-  get accessTokenExpiryDate(): Date | null {
-    return this.oidcHelperService.accessTokenExpiryDate;
-  }
-
-  get refreshToken(): string | null {
-    return this.oidcHelperService.refreshToken;
-  }
-
-  get isSessionExpired(): boolean {
-    return this.oidcHelperService.isSessionExpired;
-  }
-
-  get isLoggedIn(): boolean {
-    return this.currentUser != null;
-  }
-
-  get rememberMe(): boolean {
-    return this.localStorage.getDataObject<boolean>(DBkeys.REMEMBER_ME) === true;
   }
 }

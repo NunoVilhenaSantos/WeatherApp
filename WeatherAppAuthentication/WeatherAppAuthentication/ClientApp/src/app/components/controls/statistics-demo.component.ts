@@ -5,10 +5,10 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { AlertService, DialogType, MessageSeverity } from '../../services/alert.service';
-import { BaseChartDirective } from 'ng2-charts';
-import { ChartEvent, ChartType } from 'chart.js';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AlertService, DialogType, MessageSeverity} from '../../services/alert.service';
+import {BaseChartDirective} from 'ng2-charts';
+import {ChartEvent, ChartType} from 'chart.js';
 
 type ChartEventArgs = { event: ChartEvent; active: object[] }
 
@@ -70,8 +70,7 @@ export class StatisticsDemoComponent implements OnInit, OnDestroy {
 
     if (this.chartType != 'line') {
       this.chartOptions = baseOptions;
-    }
-    else {
+    } else {
       const lineChartOptions = {
         elements: {
           line: {
@@ -80,7 +79,7 @@ export class StatisticsDemoComponent implements OnInit, OnDestroy {
         }
       };
 
-      this.chartOptions = { ...baseOptions, ...lineChartOptions };
+      this.chartOptions = {...baseOptions, ...lineChartOptions};
     }
   }
 

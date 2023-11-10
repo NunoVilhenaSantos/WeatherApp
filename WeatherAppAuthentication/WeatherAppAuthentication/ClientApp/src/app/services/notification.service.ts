@@ -5,29 +5,29 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Injectable } from '@angular/core';
-import { Observable, interval } from 'rxjs';
-import { map, mergeMap, startWith } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {interval, Observable} from 'rxjs';
+import {map, mergeMap, startWith} from 'rxjs/operators';
 
-import { AuthService } from './auth.service';
-import { NotificationEndpoint } from './notification-endpoint.service';
-import { Notification } from '../models/notification.model';
+import {AuthService} from './auth.service';
+import {NotificationEndpoint} from './notification-endpoint.service';
+import {Notification} from '../models/notification.model';
 
 @Injectable()
 export class NotificationService {
   private lastNotificationDate: Date | undefined;
-  private _newNotifications: Notification[] | undefined;
 
-  get currentUser() {
-    return this.authService.currentUser;
+  constructor(private notificationEndpoint: NotificationEndpoint, private authService: AuthService) {
   }
+
+  private _newNotifications: Notification[] | undefined;
 
   get newNotifications() {
     return this._newNotifications;
   }
 
-
-  constructor(private notificationEndpoint: NotificationEndpoint, private authService: AuthService) {
+  get currentUser() {
+    return this.authService.currentUser;
   }
 
   getNotification(notificationId: number) {
@@ -61,19 +61,6 @@ export class NotificationService {
       }));
   }
 
-  private processNewNotificationsFromResponse(response: object[] | null) {
-    const notifications = this.getNotificationsFromResponse(response);
-
-    for (const n of notifications) {
-      if (!this.lastNotificationDate || n.date > this.lastNotificationDate)
-        this.lastNotificationDate = n.date;
-    }
-
-    this._newNotifications = notifications;
-
-    return notifications;
-  }
-
   pinUnpinNotification(notification: number | Notification, isPinned?: boolean): Observable<null> {
     if (typeof notification === 'number') {
       return this.notificationEndpoint.getPinUnpinNotificationEndpoint(notification, isPinned);
@@ -99,6 +86,19 @@ export class NotificationService {
     } else {
       return this.deleteNotification(notification.id);
     }
+  }
+
+  private processNewNotificationsFromResponse(response: object[] | null) {
+    const notifications = this.getNotificationsFromResponse(response);
+
+    for (const n of notifications) {
+      if (!this.lastNotificationDate || n.date > this.lastNotificationDate)
+        this.lastNotificationDate = n.date;
+    }
+
+    this._newNotifications = notifications;
+
+    return notifications;
   }
 
   private getNotificationsFromResponse(response: object[] | null) {

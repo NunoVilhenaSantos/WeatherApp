@@ -7,56 +7,53 @@
 
 using DAL.Repositories;
 using DAL.Repositories.Interfaces;
-using System;
-using System.Linq;
 
-namespace DAL
+namespace DAL;
+
+public class UnitOfWork : IUnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    private readonly ApplicationDbContext _context;
+    private ICustomerRepository _customers;
+    private IOrdersRepository _orders;
+    private IProductRepository _products;
+
+    public UnitOfWork(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
-        private ICustomerRepository _customers;
-        private IProductRepository _products;
-        private IOrdersRepository _orders;
+        _context = context;
+    }
 
-        public UnitOfWork(ApplicationDbContext context)
+    public ICustomerRepository Customers
+    {
+        get
         {
-            _context = context;
-        }
+            _customers ??= new CustomerRepository(_context);
 
-        public ICustomerRepository Customers
+            return _customers;
+        }
+    }
+
+    public IProductRepository Products
+    {
+        get
         {
-            get
-            {
-                _customers ??= new CustomerRepository(_context);
+            _products ??= new ProductRepository(_context);
 
-                return _customers;
-            }
+            return _products;
         }
+    }
 
-        public IProductRepository Products
+    public IOrdersRepository Orders
+    {
+        get
         {
-            get
-            {
-                _products ??= new ProductRepository(_context);
+            _orders ??= new OrdersRepository(_context);
 
-                return _products;
-            }
+            return _orders;
         }
+    }
 
-        public IOrdersRepository Orders
-        {
-            get
-            {
-                _orders ??= new OrdersRepository(_context);
-
-                return _orders;
-            }
-        }
-
-        public int SaveChanges()
-        {
-            return _context.SaveChanges();
-        }
+    public int SaveChanges()
+    {
+        return _context.SaveChanges();
     }
 }

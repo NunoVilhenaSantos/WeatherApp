@@ -9,6 +9,11 @@ export declare let alertify: Alertify;
 
 export interface Alertify {
   /**
+   * The labels used for dialog buttons
+   */
+  labels: Labels;
+
+  /**
    * Create an alert dialog box
    * @param message   The message passed from the callee
    * @param fn        Callback function
@@ -87,11 +92,6 @@ export interface Alertify {
    * @since 0.2.11
    */
   set(args: Properties): void;
-
-  /**
-   * The labels used for dialog buttons
-   */
-  labels: Labels;
 
   /**
    * Attaches alertify.error to window.onerror method

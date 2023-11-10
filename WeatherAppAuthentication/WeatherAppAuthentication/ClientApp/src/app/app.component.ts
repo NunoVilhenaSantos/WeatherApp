@@ -5,23 +5,23 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ToastaService, ToastaConfig, ToastOptions, ToastData } from 'ngx-toasta';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {ToastaConfig, ToastaService, ToastData, ToastOptions} from 'ngx-toasta';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { AlertService, AlertDialog, DialogType, AlertCommand, MessageSeverity } from './services/alert.service';
-import { NotificationService } from './services/notification.service';
-import { AppTranslationService } from './services/app-translation.service';
-import { AccountService } from './services/account.service';
-import { LocalStoreManager } from './services/local-store-manager.service';
-import { AppTitleService } from './services/app-title.service';
-import { AuthService } from './services/auth.service';
-import { ConfigurationService } from './services/configuration.service';
-import { Alertify } from './models/Alertify';
-import { Permission } from './models/permission.model';
-import { LoginComponent } from './components/login/login.component';
+import {AlertCommand, AlertDialog, AlertService, DialogType, MessageSeverity} from './services/alert.service';
+import {NotificationService} from './services/notification.service';
+import {AppTranslationService} from './services/app-translation.service';
+import {AccountService} from './services/account.service';
+import {LocalStoreManager} from './services/local-store-manager.service';
+import {AppTitleService} from './services/app-title.service';
+import {AuthService} from './services/auth.service';
+import {ConfigurationService} from './services/configuration.service';
+import {Alertify} from './models/Alertify';
+import {Permission} from './models/permission.model';
+import {LoginComponent} from './components/login/login.component';
 
 declare let alertify: Alertify;
 
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isAppLoaded = false;
   isUserLoggedIn = false;
   newNotificationCount = 0;
-  appTitle = 'WeatherAppAutentication';
+  appTitle = 'WeatherAppAuthentication';
 
   stickyToasties: number[] = [];
 
@@ -43,16 +43,6 @@ export class AppComponent implements OnInit, OnDestroy {
   notificationsLoadingSubscription: Subscription | undefined;
 
   loginControl: LoginComponent | undefined;
-
-  gT = (key: string | Array<string>, interpolateParams?: object) => this.translationService.getTranslation(key, interpolateParams);
-
-  get notificationsTitle() {
-    if (this.newNotificationCount) {
-      return `${this.gT('app.Notifications')} (${this.newNotificationCount} ${this.gT('app.New')})`;
-    } else {
-      return this.gT('app.Notifications');
-    }
-  }
 
   constructor(
     storageManager: LocalStoreManager,
@@ -78,6 +68,36 @@ export class AppComponent implements OnInit, OnDestroy {
     AppTitleService.appName = this.appTitle;
   }
 
+  get notificationsTitle() {
+    if (this.newNotificationCount) {
+      return `${this.gT('app.Notifications')} (${this.newNotificationCount} ${this.gT('app.New')})`;
+    } else {
+      return this.gT('app.Notifications');
+    }
+  }
+
+  get userName(): string {
+    return this.authService.currentUser?.userName ?? '';
+  }
+
+  get fullName(): string {
+    return this.authService.currentUser?.fullName ?? '';
+  }
+
+  get canViewCustomers() {
+    return this.accountService.userHasPermission(Permission.viewUsers); // eg. viewCustomersPermission
+  }
+
+  get canViewProducts() {
+    return this.accountService.userHasPermission(Permission.viewUsers); // eg. viewProductsPermission
+  }
+
+  get canViewOrders() {
+    return true; // eg. viewOrdersPermission
+  }
+
+  gT = (key: string | Array<string>, interpolateParams?: object) => this.translationService.getTranslation(key, interpolateParams);
+
   ngOnInit() {
     this.isUserLoggedIn = this.authService.isLoggedIn;
 
@@ -87,7 +107,7 @@ export class AppComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       if (this.isUserLoggedIn) {
         this.alertService.resetStickyMessage();
-        this.alertService.showMessage(this.gT('app.alerts.Login'), this.gT('app.alerts.WelcomeBack', { username: this.userName }), MessageSeverity.default);
+        this.alertService.showMessage(this.gT('app.alerts.Login'), this.gT('app.alerts.WelcomeBack', {username: this.userName}), MessageSeverity.default);
       }
     }, 2000);
 
@@ -115,10 +135,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.unsubscribeNotifications();
-  }
-
-  private unsubscribeNotifications() {
-    this.notificationsLoadingSubscription?.unsubscribe();
   }
 
   initNotificationsLoading() {
@@ -266,12 +282,24 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     switch (alert.message?.severity) {
-      case MessageSeverity.default: this.toastaService.default(toastOptions); break;
-      case MessageSeverity.info: this.toastaService.info(toastOptions); break;
-      case MessageSeverity.success: this.toastaService.success(toastOptions); break;
-      case MessageSeverity.error: this.toastaService.error(toastOptions); break;
-      case MessageSeverity.warn: this.toastaService.warning(toastOptions); break;
-      case MessageSeverity.wait: this.toastaService.wait(toastOptions); break;
+      case MessageSeverity.default:
+        this.toastaService.default(toastOptions);
+        break;
+      case MessageSeverity.info:
+        this.toastaService.info(toastOptions);
+        break;
+      case MessageSeverity.success:
+        this.toastaService.success(toastOptions);
+        break;
+      case MessageSeverity.error:
+        this.toastaService.error(toastOptions);
+        break;
+      case MessageSeverity.warn:
+        this.toastaService.warning(toastOptions);
+        break;
+      case MessageSeverity.wait:
+        this.toastaService.wait(toastOptions);
+        break;
     }
   }
 
@@ -284,23 +312,7 @@ export class AppComponent implements OnInit, OnDestroy {
     return new Date().getUTCFullYear();
   }
 
-  get userName(): string {
-    return this.authService.currentUser?.userName ?? '';
-  }
-
-  get fullName(): string {
-    return this.authService.currentUser?.fullName ?? '';
-  }
-
-  get canViewCustomers() {
-    return this.accountService.userHasPermission(Permission.viewUsers); // eg. viewCustomersPermission
-  }
-
-  get canViewProducts() {
-    return this.accountService.userHasPermission(Permission.viewUsers); // eg. viewProductsPermission
-  }
-
-  get canViewOrders() {
-    return true; // eg. viewOrdersPermission
+  private unsubscribeNotifications() {
+    this.notificationsLoadingSubscription?.unsubscribe();
   }
 }

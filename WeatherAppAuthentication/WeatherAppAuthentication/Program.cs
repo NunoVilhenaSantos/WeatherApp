@@ -5,13 +5,15 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
 using DAL;
 using DAL.Core;
 using DAL.Core.Interfaces;
 using DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,9 +25,6 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using OpenIddict.Validation.AspNetCore;
 using Quartz;
-using System;
-using System.Reflection;
-using System.Threading.Tasks;
 using WeatherAppAuthentication.Authorization;
 using WeatherAppAuthentication.Helpers;
 using static OpenIddict.Abstractions.OpenIddictConstants;
@@ -33,7 +32,6 @@ using AppPermissions = DAL.Core.ApplicationPermissions;
 
 
 namespace WeatherAppAuthentication;
-
 
 public class Program
 {
@@ -50,36 +48,43 @@ public class Program
         ConfigureRequestPipeline(app);
 
         //Seed initial database
-        await SeedDatabase(app); 
+        await SeedDatabase(app);
 
         await app.RunAsync();
     }
 
     private static void AddServices(WebApplicationBuilder builder)
     {
-        var connectionString = 
-            builder.Configuration.GetConnectionString("DefaultConnection") ??
-            throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        // var connectionString = 
+        //     builder.Configuration.GetConnectionString("DefaultConnection") ??
+        //     throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-        var connectionStringMySQLLocal =
+        var connectionString =
             builder.Configuration.GetConnectionString("MySQL-Local") ??
-            throw new InvalidOperationException("Connection string 'MySQL-Local' not found.");
+            throw new InvalidOperationException(
+                "Connection string 'MySQL-Local' not found.");
 
 
         // WeatherAppAuthentication
-        var migrationsAssembly = typeof(Program).GetTypeInfo().Assembly.GetName().Name;
+        var migrationsAssembly =
+            typeof(Program).GetTypeInfo().Assembly.GetName().Name;
 
 
         //builder.Services.AddDbContext<ApplicationDbContext>(options =>
         //{
         //    options.UseSqlServer(connectionString, b => b.MigrationsAssembly(migrationsAssembly));
         //    options.UseOpenIddict();
+        //    options.EnableSensitiveDataLogging().UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
         //});
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseMySQL(connectionStringMySQLLocal, b => b.MigrationsAssembly(migrationsAssembly));
+            options.UseMySQL(connectionString,
+                b => b.MigrationsAssembly(migrationsAssembly));
             options.UseOpenIddict();
+            options.EnableSensitiveDataLogging()
+                .UseLoggerFactory(
+                    LoggerFactory.Create(builder => builder.AddConsole()));
         });
 
 
@@ -120,13 +125,14 @@ public class Program
         });
 
         // Register the Quartz.NET service and configure it to block shutdown until jobs are complete.
-        builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+        builder.Services.AddQuartzHostedService(options =>
+            options.WaitForJobsToComplete = true);
 
         builder.Services.AddOpenIddict()
             .AddCore(options =>
             {
                 options.UseEntityFrameworkCore()
-                       .UseDbContext<ApplicationDbContext>();
+                    .UseDbContext<ApplicationDbContext>();
 
                 options.UseQuartz();
             })
@@ -135,7 +141,7 @@ public class Program
                 options.SetTokenEndpointUris("connect/token");
 
                 options.AllowPasswordFlow()
-                       .AllowRefreshTokenFlow();
+                    .AllowRefreshTokenFlow();
 
                 options.RegisterScopes(
                     Scopes.Profile,
@@ -146,10 +152,10 @@ public class Program
 
                 // For persisted keys see https://documentation.openiddict.com/configuration/encryption-and-signing-credentials.html
                 options.AddEphemeralEncryptionKey()
-                       .AddEphemeralSigningKey();
+                    .AddEphemeralSigningKey();
 
                 options.UseAspNetCore()
-                       .EnableTokenEndpointPassthrough();
+                    .EnableTokenEndpointPassthrough();
             })
             .AddValidation(options =>
             {
@@ -159,21 +165,38 @@ public class Program
 
         builder.Services.AddAuthentication(o =>
         {
-            o.DefaultScheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
-            o.DefaultAuthenticateScheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
-            o.DefaultChallengeScheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
+            o.DefaultScheme = OpenIddictValidationAspNetCoreDefaults
+                .AuthenticationScheme;
+            o.DefaultAuthenticateScheme = OpenIddictValidationAspNetCoreDefaults
+                .AuthenticationScheme;
+            o.DefaultChallengeScheme = OpenIddictValidationAspNetCoreDefaults
+                .AuthenticationScheme;
         });
 
         builder.Services.AddAuthorization(options =>
         {
-            options.AddPolicy(Policies.ViewAllUsersPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, AppPermissions.ViewUsers));
-            options.AddPolicy(Policies.ManageAllUsersPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, AppPermissions.ManageUsers));
+            options.AddPolicy(Policies.ViewAllUsersPolicy,
+                policy => policy.RequireClaim(ClaimConstants.Permission,
+                    AppPermissions.ViewUsers));
+            options.AddPolicy(Policies.ManageAllUsersPolicy,
+                policy => policy.RequireClaim(ClaimConstants.Permission,
+                    AppPermissions.ManageUsers));
 
-            options.AddPolicy(Policies.ViewAllRolesPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, AppPermissions.ViewRoles));
-            options.AddPolicy(Policies.ViewRoleByRoleNamePolicy, policy => policy.Requirements.Add(new ViewRoleAuthorizationRequirement()));
-            options.AddPolicy(Policies.ManageAllRolesPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, AppPermissions.ManageRoles));
+            options.AddPolicy(Policies.ViewAllRolesPolicy,
+                policy => policy.RequireClaim(ClaimConstants.Permission,
+                    AppPermissions.ViewRoles));
+            options.AddPolicy(Policies.ViewRoleByRoleNamePolicy,
+                policy =>
+                    policy.Requirements.Add(
+                        new ViewRoleAuthorizationRequirement()));
+            options.AddPolicy(Policies.ManageAllRolesPolicy,
+                policy => policy.RequireClaim(ClaimConstants.Permission,
+                    AppPermissions.ManageRoles));
 
-            options.AddPolicy(Policies.AssignAllowedRolesPolicy, policy => policy.Requirements.Add(new AssignRolesAuthorizationRequirement()));
+            options.AddPolicy(Policies.AssignAllowedRolesPolicy,
+                policy =>
+                    policy.Requirements.Add(
+                        new AssignRolesAuthorizationRequirement()));
         });
 
 
@@ -184,7 +207,11 @@ public class Program
 
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = OidcServerManager.ApiFriendlyName, Version = "v1" });
+            c.SwaggerDoc("v1",
+                new OpenApiInfo
+                {
+                    Title = OidcServerManager.ApiFriendlyName, Version = "v1"
+                });
             c.OperationFilter<AuthorizeCheckOperationFilter>();
             c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
             {
@@ -212,13 +239,22 @@ public class Program
         builder.Services.AddScoped<IAccountManager, AccountManager>();
 
         // Auth Handlers
-        builder.Services.AddSingleton<IAuthorizationHandler, ViewUserAuthorizationHandler>();
-        builder.Services.AddSingleton<IAuthorizationHandler, ManageUserAuthorizationHandler>();
-        builder.Services.AddSingleton<IAuthorizationHandler, ViewRoleAuthorizationHandler>();
-        builder.Services.AddSingleton<IAuthorizationHandler, AssignRolesAuthorizationHandler>();
+        builder.Services
+            .AddSingleton<IAuthorizationHandler,
+                ViewUserAuthorizationHandler>();
+        builder.Services
+            .AddSingleton<IAuthorizationHandler,
+                ManageUserAuthorizationHandler>();
+        builder.Services
+            .AddSingleton<IAuthorizationHandler,
+                ViewRoleAuthorizationHandler>();
+        builder.Services
+            .AddSingleton<IAuthorizationHandler,
+                AssignRolesAuthorizationHandler>();
 
         // DB Creation and Seeding
-        builder.Services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
+        builder.Services
+            .AddTransient<IDatabaseInitializer, DatabaseInitializer>();
 
         //File Logger
         builder.Logging.AddFile(builder.Configuration.GetSection("Logging"));
@@ -259,13 +295,14 @@ public class Program
         app.UseSwaggerUI(c =>
         {
             c.DocumentTitle = "Swagger UI - WeatherAppAuthentication";
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{OidcServerManager.ApiFriendlyName} V1");
+            c.SwaggerEndpoint("/swagger/v1/swagger.json",
+                $"{OidcServerManager.ApiFriendlyName} V1");
             c.OAuthClientId(OidcServerManager.SwaggerClientID);
         });
 
         app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller}/{action=Index}/{id?}");
+            "default",
+            "{controller}/{action=Index}/{id?}");
 
         app.Map("api/{**slug}", context =>
         {
@@ -277,24 +314,27 @@ public class Program
     }
 
 
-
     private static async Task SeedDatabase(WebApplication app)
     {
         using (var scope = app.Services.CreateScope())
         {
             try
             {
-                var databaseInitializer = scope.ServiceProvider.GetRequiredService<IDatabaseInitializer>();
-                
+                var databaseInitializer = scope.ServiceProvider
+                    .GetRequiredService<IDatabaseInitializer>();
+
                 await databaseInitializer.SeedAsync();
 
-                await OidcServerManager.RegisterApplicationsAsync(scope.ServiceProvider);
+                await OidcServerManager.RegisterApplicationsAsync(
+                    scope.ServiceProvider);
             }
             catch (Exception ex)
             {
-                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                
-                logger.LogCritical(LoggingEvents.INIT_DATABASE, ex, LoggingEvents.INIT_DATABASE.Name);
+                var logger = scope.ServiceProvider
+                    .GetRequiredService<ILogger<Program>>();
+
+                logger.LogCritical(LoggingEvents.INIT_DATABASE, ex,
+                    LoggingEvents.INIT_DATABASE.Name);
 
                 throw new Exception(LoggingEvents.INIT_DATABASE.Name, ex);
             }

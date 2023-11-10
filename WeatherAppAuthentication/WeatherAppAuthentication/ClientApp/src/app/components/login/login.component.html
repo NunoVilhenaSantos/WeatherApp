@@ -2,21 +2,24 @@
   <div class="login-container m-auto">
     <div class="card boxshadow">
       <div class="card-header bg-primary text-white">
-        <i class="fa fa-lock" aria-hidden="true"></i> Login
-        <button *ngIf="isModal" type="button" class="btn-close btn-close-white fs-sm float-end" aria-label="Close" (click)="closeModal()" tabindex="-1"></button>
+        <i aria-hidden="true" class="fa fa-lock"></i> Login
+        <button (click)="closeModal()" *ngIf="isModal" aria-label="Close" class="btn-close btn-close-white fs-sm float-end"
+                tabindex="-1" type="button"></button>
       </div>
       <div class="card-body">
         <div class="col-md-10 offset-md-1 px-md-3">
-          <form *ngIf="formResetToggle" class="login" name="loginForm" #f="ngForm" novalidate
-                (ngSubmit)="f.form.valid ? login() :
+          <form #f="ngForm" (ngSubmit)="f.form.valid ? login() :
                           (!username.valid && showErrorAlert('Username is required', 'Please enter a valid username'));
-                          (!password.valid && showErrorAlert('Password is required', 'Please enter a valid password'))">
+                          (!password.valid && showErrorAlert('Password is required', 'Please enter a valid password'))" *ngIf="formResetToggle" class="login" name="loginForm"
+                novalidate>
             <div class="mb-3 row">
               <label class="col-form-label text-md-end col-md-4" for="login-username">Username:</label>
               <div class="col-md-8">
-                <input type="text" id="login-username" name="username" placeholder="Enter username" autocomplete="username" class="form-control" [ngClass]="{'is-valid': f.submitted && username.valid, 'is-invalid' : f.submitted && !username.valid}"
-                       [(ngModel)]="userLogin.userName" #username="ngModel" required />
-                <span class="invalid-feedback" *ngIf="f.submitted && !username.valid">
+                <input #username="ngModel" [(ngModel)]="userLogin.userName" [ngClass]="{'is-valid': f.submitted && username.valid, 'is-invalid' : f.submitted && !username.valid}" autocomplete="username"
+                       class="form-control" id="login-username"
+                       name="username"
+                       placeholder="Enter username" required type="text"/>
+                <span *ngIf="f.submitted && !username.valid" class="invalid-feedback">
                   Username is required
                 </span>
               </div>
@@ -24,9 +27,11 @@
             <div class="mb-3 row">
               <label class="col-form-label text-md-end col-md-4" for="login-password">Password:</label>
               <div class="col-md-8">
-                <input type="password" id="login-password" name="password" placeholder="Enter password" autocomplete="current-password" class="form-control" [ngClass]="{'is-valid': f.submitted && password.valid, 'is-invalid' : f.submitted && !password.valid}"
-                       [(ngModel)]="userLogin.password" #password="ngModel" required />
-                <span class="invalid-feedback" *ngIf="f.submitted && !password.valid">
+                <input #password="ngModel" [(ngModel)]="userLogin.password" [ngClass]="{'is-valid': f.submitted && password.valid, 'is-invalid' : f.submitted && !password.valid}" autocomplete="current-password"
+                       class="form-control" id="login-password"
+                       name="password"
+                       placeholder="Enter password" required type="password"/>
+                <span *ngIf="f.submitted && !password.valid" class="invalid-feedback">
                   Password is required
                 </span>
               </div>
@@ -34,7 +39,8 @@
             <div class="mb-3 row">
               <div class="offset-md-4 col-md-8">
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="login-rememberme" name="rememberMe" [(ngModel)]="userLogin.rememberMe">
+                  <input [(ngModel)]="userLogin.rememberMe" class="form-check-input" id="login-rememberme" name="rememberMe"
+                         type="checkbox">
                   <label class="form-check-label" for="login-rememberme">Remember me</label>
                 </div>
               </div>
@@ -42,8 +48,9 @@
             <div class="mb-3 row">
               <div class="offset-md-4 col-md-8">
                 <div class="d-flex align-items-stretch">
-                  <button type="submit" class="btn btn-primary text-nowrap" [disabled]="isLoading">
-                    <i *ngIf="isLoading" class='fa fa-circle-o-notch fa-spin'></i> {{isLoading ? 'Logging in...' : 'Login'}}
+                  <button [disabled]="isLoading" class="btn btn-primary text-nowrap" type="submit">
+                    <i *ngIf="isLoading"
+                       class='fa fa-circle-o-notch fa-spin'></i> {{isLoading ? 'Logging in...' : 'Login'}}
                   </button>
                 </div>
               </div>

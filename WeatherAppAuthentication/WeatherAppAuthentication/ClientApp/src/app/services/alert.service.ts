@@ -5,11 +5,11 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Injectable } from '@angular/core';
-import { HttpResponseBase } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpResponseBase} from '@angular/common/http';
+import {Observable, Subject} from 'rxjs';
 
-import { Utilities } from './utilities';
+import {Utilities} from './utilities';
 
 @Injectable()
 export class AlertService {
@@ -20,13 +20,15 @@ export class AlertService {
 
   showDialog(message: string): void;
   showDialog(message: string, type: DialogType, okCallback: (val?: string) => void): void;
-  showDialog(message: string, type: DialogType, okCallback?: { (val?: string): void } | null, cancelCallback?: { (): void } | null, okLabel?: string | null, cancelLabel?: string | null, defaultValue?: string | null): void;
+  showDialog(message: string, type: DialogType, okCallback?: { (val?: string): void } | null, cancelCallback?: {
+    (): void
+  } | null, okLabel?: string | null, cancelLabel?: string | null, defaultValue?: string | null): void;
   showDialog(message: string, type?: DialogType, okCallback?: (val?: string) => void, cancelCallback?: () => void, okLabel?: string, cancelLabel?: string, defaultValue?: string) {
     if (!type) {
       type = DialogType.alert;
     }
 
-    this.dialogs.next({ message, type, okCallback, cancelCallback, okLabel, cancelLabel, defaultValue });
+    this.dialogs.next({message, type, okCallback, cancelCallback, okLabel, cancelLabel, defaultValue});
   }
 
   showMessage(summary: string): void;
@@ -106,21 +108,8 @@ export class AlertService {
     }
   }
 
-  private showMessageHelper(summary: string, detail: string | null | undefined, severity: MessageSeverity, isSticky: boolean, onRemove?: () => void) {
-    if (detail === null)
-      detail = undefined;
-
-    const alertCommand: AlertCommand = {
-      operation: isSticky ? 'add_sticky' : 'add',
-      message: { severity, summary, detail },
-      onRemove
-    };
-
-    this.messages.next(alertCommand);
-  }
-
   resetStickyMessage() {
-    this.messages.next({ operation: 'clear' });
+    this.messages.next({operation: 'clear'});
   }
 
   startLoadingMessage(message = 'Loading...', caption = '') {
@@ -140,7 +129,6 @@ export class AlertService {
     clearTimeout(this.loadingMessageTimeoutId);
     this.resetStickyMessage();
   }
-
 
   logDebug(msg: unknown) {
     console.debug(msg);
@@ -173,6 +161,19 @@ export class AlertService {
   getMessageEvent(): Observable<AlertCommand> {
     return this.messages.asObservable();
   }
+
+  private showMessageHelper(summary: string, detail: string | null | undefined, severity: MessageSeverity, isSticky: boolean, onRemove?: () => void) {
+    if (detail === null)
+      detail = undefined;
+
+    const alertCommand: AlertCommand = {
+      operation: isSticky ? 'add_sticky' : 'add',
+      message: {severity, summary, detail},
+      onRemove
+    };
+
+    this.messages.next(alertCommand);
+  }
 }
 
 
@@ -195,6 +196,7 @@ export enum DialogType {
   confirm,
   prompt
 }
+
 // ******************** End ********************//
 
 
@@ -203,14 +205,16 @@ export class AlertCommand {
   constructor(
     public operation: 'clear' | 'add' | 'add_sticky',
     public message?: AlertMessage,
-    public onRemove?: () => void) { }
+    public onRemove?: () => void) {
+  }
 }
 
 export class AlertMessage {
   constructor(
     public severity: MessageSeverity,
     public summary: string,
-    public detail?: string | undefined) { }
+    public detail?: string | undefined) {
+  }
 }
 
 export enum MessageSeverity {
@@ -221,4 +225,5 @@ export enum MessageSeverity {
   warn,
   wait
 }
+
 // ******************** End ********************//

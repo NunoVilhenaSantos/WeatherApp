@@ -5,15 +5,16 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Permission } from './permission.model';
+import {Permission} from './permission.model';
 
 export class Role {
+  public id = '';
+  public usersCount = 0;
+
   constructor(
     public name = '',
     public description = '',
     public permissions: Permission[] = []
-  ) { }
-
-  public id = '';
-  public usersCount = 0;
+  ) {
+  }
 }

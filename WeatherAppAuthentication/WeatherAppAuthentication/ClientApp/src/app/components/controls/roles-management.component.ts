@@ -5,17 +5,17 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TableColumn } from '@swimlane/ngx-datatable';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {TableColumn} from '@swimlane/ngx-datatable';
 
-import { AlertService, DialogType, MessageSeverity } from '../../services/alert.service';
-import { AppTranslationService } from '../../services/app-translation.service';
-import { AccountService } from '../../services/account.service';
-import { Utilities } from '../../services/utilities';
-import { Role } from '../../models/role.model';
-import { Permission } from '../../models/permission.model';
-import { RoleEditorComponent } from './role-editor.component';
+import {AlertService, DialogType, MessageSeverity} from '../../services/alert.service';
+import {AppTranslationService} from '../../services/app-translation.service';
+import {AccountService} from '../../services/account.service';
+import {Utilities} from '../../services/utilities';
+import {Role} from '../../models/role.model';
+import {Permission} from '../../models/permission.model';
+import {RoleEditorComponent} from './role-editor.component';
 
 
 interface RoleIndex extends Role {
@@ -39,30 +39,42 @@ export class RolesManagementComponent implements OnInit {
   loadingIndicator = false;
 
 
-  @ViewChild('indexTemplate', { static: true })
+  @ViewChild('indexTemplate', {static: true})
   indexTemplate!: TemplateRef<unknown>;
 
-  @ViewChild('actionsTemplate', { static: true })
+  @ViewChild('actionsTemplate', {static: true})
   actionsTemplate!: TemplateRef<unknown>;
 
-  @ViewChild('editorModal', { static: true })
+  @ViewChild('editorModal', {static: true})
   editorModalTemplate!: TemplateRef<unknown>;
 
   roleEditor: RoleEditorComponent | null = null;
 
   constructor(private alertService: AlertService, private translationService: AppTranslationService,
-    private accountService: AccountService, private modalService: NgbModal) {
+              private accountService: AccountService, private modalService: NgbModal) {
+  }
+
+  get canManageRoles() {
+    return this.accountService.userHasPermission(Permission.manageRoles);
   }
 
   ngOnInit() {
     const gT = (key: string) => this.translationService.getTranslation(key);
 
     this.columns = [
-      { prop: 'index', name: '#', width: 50, cellTemplate: this.indexTemplate, canAutoResize: false },
-      { prop: 'name', name: gT('roles.management.Name'), width: 180 },
-      { prop: 'description', name: gT('roles.management.Description'), width: 320 },
-      { prop: 'usersCount', name: gT('roles.management.Users'), width: 50 },
-      { name: '', width: 160, cellTemplate: this.actionsTemplate, resizeable: false, canAutoResize: false, sortable: false, draggable: false }
+      {prop: 'index', name: '#', width: 50, cellTemplate: this.indexTemplate, canAutoResize: false},
+      {prop: 'name', name: gT('roles.management.Name'), width: 180},
+      {prop: 'description', name: gT('roles.management.Description'), width: 320},
+      {prop: 'usersCount', name: gT('roles.management.Users'), width: 50},
+      {
+        name: '',
+        width: 160,
+        cellTemplate: this.actionsTemplate,
+        resizeable: false,
+        canAutoResize: false,
+        sortable: false,
+        draggable: false
+      }
     ];
 
     this.loadData();
@@ -158,7 +170,7 @@ export class RolesManagementComponent implements OnInit {
   }
 
   editRole(row: Role) {
-    this.editingRoleName = { name: row.name };
+    this.editingRoleName = {name: row.name};
     this.sourceRole = row;
 
     this.openRoleEditor();
@@ -223,9 +235,5 @@ export class RolesManagementComponent implements OnInit {
             MessageSeverity.error, error);
         }
       });
-  }
-
-  get canManageRoles() {
-    return this.accountService.userHasPermission(Permission.manageRoles);
   }
 }

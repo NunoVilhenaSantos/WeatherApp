@@ -5,19 +5,23 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Injectable } from '@angular/core';
-import { Observable, Subject, forkJoin } from 'rxjs';
-import { mergeMap, tap } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {forkJoin, Observable, Subject} from 'rxjs';
+import {mergeMap, tap} from 'rxjs/operators';
 
-import { AccountEndpoint } from './account-endpoint.service';
-import { AuthService } from './auth.service';
-import { User } from '../models/user.model';
-import { Role } from '../models/role.model';
-import { Permission, PermissionValues } from '../models/permission.model';
-import { UserEdit } from '../models/user-edit.model';
+import {AccountEndpoint} from './account-endpoint.service';
+import {AuthService} from './auth.service';
+import {User} from '../models/user.model';
+import {Role} from '../models/role.model';
+import {Permission, PermissionValues} from '../models/permission.model';
+import {UserEdit} from '../models/user-edit.model';
 
 export type RolesChangedOperation = 'add' | 'delete' | 'modify';
-export interface RolesChangedEventArg { roles: Role[] | string[]; operation: RolesChangedOperation; }
+
+export interface RolesChangedEventArg {
+  roles: Role[] | string[];
+  operation: RolesChangedOperation;
+}
 
 @Injectable()
 export class AccountService {
@@ -31,6 +35,14 @@ export class AccountService {
     private authService: AuthService,
     private accountEndpoint: AccountEndpoint) {
 
+  }
+
+  get permissions(): PermissionValues[] {
+    return this.authService.userPermissions;
+  }
+
+  get currentUser() {
+    return this.authService.currentUser;
   }
 
   getUser(userId?: string) {
@@ -151,10 +163,6 @@ export class AccountService {
     return this.accountEndpoint.getPermissionsEndpoint<Permission[]>();
   }
 
-  private onRolesChanged(roles: Role[] | string[], op: RolesChangedOperation) {
-    this.rolesChanged.next({ roles, operation: op });
-  }
-
   onRolesUserCountChanged(roles: Role[] | string[]) {
     return this.onRolesChanged(roles, AccountService.roleModifiedOperation);
   }
@@ -163,11 +171,7 @@ export class AccountService {
     return this.rolesChanged.asObservable();
   }
 
-  get permissions(): PermissionValues[] {
-    return this.authService.userPermissions;
-  }
-
-  get currentUser() {
-    return this.authService.currentUser;
+  private onRolesChanged(roles: Role[] | string[], op: RolesChangedOperation) {
+    this.rolesChanged.next({roles, operation: op});
   }
 }

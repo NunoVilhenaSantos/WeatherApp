@@ -5,7 +5,7 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component, ViewChild, ElementRef, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-search-box',

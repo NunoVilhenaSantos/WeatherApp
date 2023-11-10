@@ -5,14 +5,14 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
 
-import { AlertService, MessageSeverity, DialogType } from '../../services/alert.service';
-import { AuthService } from '../../services/auth.service';
-import { ConfigurationService } from '../../services/configuration.service';
-import { Utilities } from '../../services/utilities';
-import { UserLogin } from '../../models/user-login.model';
+import {AlertService, DialogType, MessageSeverity} from '../../services/alert.service';
+import {AuthService} from '../../services/auth.service';
+import {ConfigurationService} from '../../services/configuration.service';
+import {Utilities} from '../../services/utilities';
+import {UserLogin} from '../../models/user-login.model';
 
 @Component({
   selector: 'app-login',

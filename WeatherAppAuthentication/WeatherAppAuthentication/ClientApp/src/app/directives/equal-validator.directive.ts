@@ -5,19 +5,19 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Directive, forwardRef, Attribute } from '@angular/core';
-import { Validator, AbstractControl, NG_VALIDATORS, ValidationErrors } from '@angular/forms';
+import {Attribute, Directive, forwardRef} from '@angular/core';
+import {AbstractControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 
 
 @Directive({
   selector: '[appValidateEqual][formControlName],[appValidateEqual][formControl],[appValidateEqual][ngModel]',
   providers: [
-    { provide: NG_VALIDATORS, useExisting: forwardRef(() => EqualValidator), multi: true }
+    {provide: NG_VALIDATORS, useExisting: forwardRef(() => EqualValidator), multi: true}
   ]
 })
 export class EqualValidator implements Validator {
   constructor(@Attribute('appValidateEqual') public validateEqual: string,
-    @Attribute('reverse') public reverse: string) {
+              @Attribute('reverse') public reverse: string) {
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
@@ -31,7 +31,7 @@ export class EqualValidator implements Validator {
   }
 
   private validateNoReverse(control: AbstractControl, other: AbstractControl): ValidationErrors | null {
-    return other.value === control.value ? null : { validateEqual: true };
+    return other.value === control.value ? null : {validateEqual: true};
   }
 
   private validateReverse(control: AbstractControl, other: AbstractControl): ValidationErrors | null {
@@ -44,7 +44,7 @@ export class EqualValidator implements Validator {
         }
       }
     } else {
-      other.setErrors({ validateEqual: true });
+      other.setErrors({validateEqual: true});
     }
 
     return null;

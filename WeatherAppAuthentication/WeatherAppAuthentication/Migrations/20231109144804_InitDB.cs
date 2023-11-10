@@ -1,19 +1,12 @@
-﻿// ---------------------------------------------------
-// Demo 1: https://quickapp-pro.azurewebsites.net
-// Demo 2: https://quickapp-standard.azurewebsites.net
-//
-// --> Gun4Hire: contact@ebenmonney.com
-// ---------------------------------------------------
-
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 #nullable disable
 
 namespace WeatherAppAuthentication.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -5,15 +5,11 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-using System;
-using System.Linq;
+namespace WeatherAppAuthentication.ViewModels;
 
-namespace WeatherAppAuthentication.ViewModels
+public class OrderViewModel
 {
-    public class OrderViewModel
-    {
-        public int Id { get; set; }
-        public decimal Discount { get; set; }
-        public string Comments { get; set; }
-    }
+    public int Id { get; set; }
+    public decimal Discount { get; set; }
+    public string Comments { get; set; }
 }

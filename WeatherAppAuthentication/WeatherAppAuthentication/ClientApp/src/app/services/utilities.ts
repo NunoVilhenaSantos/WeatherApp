@@ -5,8 +5,8 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Injectable } from '@angular/core';
-import { HttpResponseBase, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpErrorResponse, HttpResponse, HttpResponseBase} from '@angular/common/http';
 
 type HttpMessageSearchOptions = Readonly<{
   searchInCaption?: boolean;
@@ -83,7 +83,9 @@ export class Utilities {
       },
       keys: () => {
         const aKeys = document.cookie.replace(/((?:^|\s*;)[^=]+)(?=;|$)|^\s*|\s*(?:=[^;]*)?(?:$)/g, '').split(/\s*(?:=[^;]*)?;\s*/);
-        for (let nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+        for (let nIdx = 0; nIdx < aKeys.length; nIdx++) {
+          aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]);
+        }
         return aKeys;
       }
     };
@@ -101,8 +103,7 @@ export class Utilities {
           for (const key in responseData) {
             responses.push(`${key}${this.captionAndMessageSeparator} ${responseData[key]}`);
           }
-        }
-        else {
+        } else {
           responses.push(responseData);
         }
       }
@@ -161,18 +162,18 @@ export class Utilities {
   }
 
   public static findHttpResponseMessage(searchString: string, data: HttpResponseBase,
-    searchOptions?: HttpMessageSearchOptions): string | null {
+                                        searchOptions?: HttpMessageSearchOptions): string | null {
 
     searchString = searchString.toUpperCase();
-    searchOptions = { ...this.findHttpResponseMessageDefaultSearchOption, ...searchOptions };
+    searchOptions = {...this.findHttpResponseMessageDefaultSearchOption, ...searchOptions};
 
     let result: string | null = null;
-    let captionAndMessage = { caption: '', message: null as string | null };
+    let captionAndMessage = {caption: '', message: null as string | null};
     const httpMessages = this.getHttpResponseMessages(data);
 
     for (const httpMsg of httpMessages) {
       const splitMsg = Utilities.splitInTwo(httpMsg, this.captionAndMessageSeparator);
-      captionAndMessage = { caption: splitMsg.firstPart, message: splitMsg.secondPart ?? null };
+      captionAndMessage = {caption: splitMsg.firstPart, message: splitMsg.secondPart ?? null};
 
       let messageToSearch = '';
 
@@ -277,7 +278,10 @@ export class Utilities {
     return params;
   }
 
-  public static splitInTwo(text: string, separator: string, splitFromEnd = false): { firstPart: string, secondPart: string | undefined } {
+  public static splitInTwo(text: string, separator: string, splitFromEnd = false): {
+    firstPart: string,
+    secondPart: string | undefined
+  } {
     let separatorIndex = -1;
 
     if (separator !== '') {
@@ -288,13 +292,13 @@ export class Utilities {
     }
 
     if (separatorIndex === -1) {
-      return { firstPart: text, secondPart: undefined };
+      return {firstPart: text, secondPart: undefined};
     }
 
     const part1 = text.substring(0, separatorIndex).trim();
     const part2 = text.substring(separatorIndex + 1).trim();
 
-    return { firstPart: part1, secondPart: part2 };
+    return {firstPart: part1, secondPart: part2};
   }
 
   public static stringify(value: unknown, depth = 3): string {
@@ -472,8 +476,10 @@ export class Utilities {
   }
 
   public static printFriendlyDate(date: Date, separator = '-') {
-    const today = new Date(); today.setHours(0, 0, 0, 0);
-    const yesterday = new Date(today); yesterday.setDate(yesterday.getDate() - 1);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
     const test = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
     if (test.toDateString() === today.toDateString()) {

@@ -5,14 +5,14 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
-import { fadeInOut } from '../../services/animations';
-import { BootstrapTabDirective, EventArg } from '../../directives/bootstrap-tab.directive';
-import { AccountService } from '../../services/account.service';
-import { Permission } from '../../models/permission.model';
+import {fadeInOut} from '../../services/animations';
+import {BootstrapTabDirective, EventArg} from '../../directives/bootstrap-tab.directive';
+import {AccountService} from '../../services/account.service';
+import {Permission} from '../../models/permission.model';
 
 
 @Component({
@@ -34,11 +34,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
   readonly usersTab = 'users';
   readonly rolesTab = 'roles';
 
-  @ViewChild('tab', { static: true })
+  @ViewChild('tab', {static: true})
   tab!: BootstrapTabDirective;
 
 
   constructor(private router: Router, private route: ActivatedRoute, private accountService: AccountService) {
+  }
+
+  get canViewUsers() {
+    return this.accountService.userHasPermission(Permission.viewUsers);
+  }
+
+  get canViewRoles() {
+    return this.accountService.userHasPermission(Permission.viewRoles);
   }
 
   ngOnInit() {
@@ -82,14 +90,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.isUsersActivated = activeTab === this.usersTab;
     this.isRolesActivated = activeTab === this.rolesTab;
 
-    this.router.navigate([], { fragment: activeTab });
-  }
-
-  get canViewUsers() {
-    return this.accountService.userHasPermission(Permission.viewUsers);
-  }
-
-  get canViewRoles() {
-    return this.accountService.userHasPermission(Permission.viewRoles);
+    this.router.navigate([], {fragment: activeTab});
   }
 }

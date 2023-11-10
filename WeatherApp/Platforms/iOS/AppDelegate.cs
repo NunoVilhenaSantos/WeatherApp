@@ -1,11 +1,12 @@
 ﻿using Foundation;
 
-namespace WeatherApp.Platforms.iOS
+namespace WeatherApp.Platforms.iOS;
+
+[Register("AppDelegate")]
+public class AppDelegate : MauiUIApplicationDelegate
 {
-    [Register("AppDelegate")]
-    public class AppDelegate : MauiUIApplicationDelegate
+    protected override MauiApp CreateMauiApp()
     {
-        protected override MauiApp CreateMauiApp() =>
-            MauiProgram.CreateMauiApp();
+        return MauiProgram.CreateMauiApp();
     }
 }

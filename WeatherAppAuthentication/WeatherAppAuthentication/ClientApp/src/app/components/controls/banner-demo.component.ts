@@ -5,8 +5,7 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component } from '@angular/core';
-
+import {Component} from '@angular/core';
 
 
 @Component({

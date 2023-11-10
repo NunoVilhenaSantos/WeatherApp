@@ -5,19 +5,18 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
 
-import { Utilities } from './utilities';
+import {Utilities} from './utilities';
 
 @Injectable()
 /**
  * Provides a wrapper for accessing the web storage API and synchronizing session storage across tabs/windows.
  */
 export class LocalStoreManager {
-  private static syncListenerInitialised = false;
-
   public static readonly DBKEY_USER_DATA = 'user_data';
+  private static syncListenerInitialised = false;
   private static readonly DBKEY_SYNC_KEYS = 'sync_keys';
   private syncKeys: string[] = [];
   private initEvent = new Subject<void>();
@@ -229,7 +228,7 @@ export class LocalStoreManager {
     this.addToSessionStorageHelper(data, key);
     this.addToSyncKeysBackup(key);
 
-    this.localStorageSetItem('addToSessionStorage', { key, data });
+    this.localStorageSetItem('addToSessionStorage', {key, data});
     localStorage.removeItem('addToSessionStorage');
   }
 

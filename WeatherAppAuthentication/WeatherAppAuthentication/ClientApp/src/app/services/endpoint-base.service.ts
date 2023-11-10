@@ -5,13 +5,13 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, from, throwError } from 'rxjs';
-import { mergeMap, switchMap, catchError } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {from, Observable, Subject, throwError} from 'rxjs';
+import {catchError, mergeMap, switchMap} from 'rxjs/operators';
 
-import { AuthService } from './auth.service';
-import { User } from '../models/user.model';
+import {AuthService} from './auth.service';
+import {User} from '../models/user.model';
 
 interface ServerError {
   status: number;
@@ -39,7 +39,7 @@ export class EndpointBase {
       Accept: 'application/json, text/plain, */*'
     });
 
-    return { headers };
+    return {headers};
   }
 
   public refreshLogin(): Observable<User> {

@@ -5,8 +5,8 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component } from '@angular/core';
-import { fadeInOut } from '../../services/animations';
+import {Component} from '@angular/core';
+import {fadeInOut} from '../../services/animations';
 
 @Component({
   selector: 'app-not-found',

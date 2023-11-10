@@ -83,8 +83,7 @@ textarea.form-control.left-status,
       // Avoid using mixin so we can pass custom focus shadow properly
       @if $enable-shadows {
         box-shadow: $input-box-shadow, $input-focus-box-shadow;
-      }
-      @else {
+      } @else {
         box-shadow: $input-focus-box-shadow;
       }
     }
@@ -209,6 +208,7 @@ i.page-caption {
   white-space: pre-wrap;
   overflow: auto;
 }
+
 ///*-webkit-filter: blur(5px) grayscale(90%);*/
 ///*body.modal-open .container {
 //    -webkit-filter: blur(1px);
@@ -224,6 +224,7 @@ i.page-caption {
   display: flex;
   align-items: center;
 }
+
 ///*Hack stop get ngx-datatable width to be full when inside bootstrap tab control*/
 //.tab-pane .datatable-scroll {
 //    width: 100% !important;

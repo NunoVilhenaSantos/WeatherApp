@@ -10,5 +10,6 @@ export class UserLogin {
     public userName = '',
     public password = '',
     public rememberMe?: boolean
-  ) { }
+  ) {
+  }
 }

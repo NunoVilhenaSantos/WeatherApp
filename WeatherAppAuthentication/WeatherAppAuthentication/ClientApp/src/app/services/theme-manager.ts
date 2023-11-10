@@ -5,8 +5,8 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Injectable } from '@angular/core';
-import { AppTheme } from '../models/app-theme.model';
+import {Injectable} from '@angular/core';
+import {AppTheme} from '../models/app-theme.model';
 
 @Injectable()
 export class ThemeManager {

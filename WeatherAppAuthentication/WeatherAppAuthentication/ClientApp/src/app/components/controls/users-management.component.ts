@@ -5,20 +5,20 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TableColumn } from '@swimlane/ngx-datatable';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {TableColumn} from '@swimlane/ngx-datatable';
 
-import { AlertService, DialogType, MessageSeverity } from '../../services/alert.service';
-import { AppTranslationService } from '../../services/app-translation.service';
-import { AccountService } from '../../services/account.service';
-import { Utilities } from '../../services/utilities';
-import { User } from '../../models/user.model';
-import { Role } from '../../models/role.model';
-import { Permission } from '../../models/permission.model';
-import { UserEdit } from '../../models/user-edit.model';
-import { UserInfoComponent } from './user-info.component';
+import {AlertService, DialogType, MessageSeverity} from '../../services/alert.service';
+import {AppTranslationService} from '../../services/app-translation.service';
+import {AccountService} from '../../services/account.service';
+import {Utilities} from '../../services/utilities';
+import {User} from '../../models/user.model';
+import {Role} from '../../models/role.model';
+import {Permission} from '../../models/permission.model';
+import {UserEdit} from '../../models/user-edit.model';
+import {UserInfoComponent} from './user-info.component';
 
 interface UserIndex extends User {
   index: number;
@@ -41,38 +41,50 @@ export class UsersManagementComponent implements OnInit {
 
   allRoles: Role[] = [];
 
-  @ViewChild('indexTemplate', { static: true })
+  @ViewChild('indexTemplate', {static: true})
   indexTemplate!: TemplateRef<unknown>;
 
-  @ViewChild('userNameTemplate', { static: true })
+  @ViewChild('userNameTemplate', {static: true})
   userNameTemplate!: TemplateRef<unknown>;
 
-  @ViewChild('rolesTemplate', { static: true })
+  @ViewChild('rolesTemplate', {static: true})
   rolesTemplate!: TemplateRef<unknown>;
 
-  @ViewChild('actionsTemplate', { static: true })
+  @ViewChild('actionsTemplate', {static: true})
   actionsTemplate!: TemplateRef<unknown>;
 
-  @ViewChild('editorModal', { static: true })
+  @ViewChild('editorModal', {static: true})
   editorModalTemplate!: TemplateRef<unknown>;
 
   userEditor: UserInfoComponent | null = null;
 
   constructor(private alertService: AlertService, private translationService: AppTranslationService,
-    private accountService: AccountService, private modalService: NgbModal) {
+              private accountService: AccountService, private modalService: NgbModal) {
+  }
+
+  get canAssignRoles() {
+    return this.accountService.userHasPermission(Permission.assignRoles);
+  }
+
+  get canViewRoles() {
+    return this.accountService.userHasPermission(Permission.viewRoles);
+  }
+
+  get canManageUsers() {
+    return this.accountService.userHasPermission(Permission.manageUsers);
   }
 
   ngOnInit() {
     const gT = (key: string) => this.translationService.getTranslation(key);
 
     this.columns = [
-      { prop: 'index', name: '#', width: 40, cellTemplate: this.indexTemplate, canAutoResize: false },
-      { prop: 'jobTitle', name: gT('users.management.Title'), width: 50 },
-      { prop: 'userName', name: gT('users.management.UserName'), width: 90, cellTemplate: this.userNameTemplate },
-      { prop: 'fullName', name: gT('users.management.FullName'), width: 120 },
-      { prop: 'email', name: gT('users.management.Email'), width: 140 },
-      { prop: 'roles', name: gT('users.management.Roles'), width: 120, cellTemplate: this.rolesTemplate },
-      { prop: 'phoneNumber', name: gT('users.management.PhoneNumber'), width: 100 }
+      {prop: 'index', name: '#', width: 40, cellTemplate: this.indexTemplate, canAutoResize: false},
+      {prop: 'jobTitle', name: gT('users.management.Title'), width: 50},
+      {prop: 'userName', name: gT('users.management.UserName'), width: 90, cellTemplate: this.userNameTemplate},
+      {prop: 'fullName', name: gT('users.management.FullName'), width: 120},
+      {prop: 'email', name: gT('users.management.Email'), width: 140},
+      {prop: 'roles', name: gT('users.management.Roles'), width: 120, cellTemplate: this.rolesTemplate},
+      {prop: 'phoneNumber', name: gT('users.management.PhoneNumber'), width: 100}
     ];
 
     if (this.canManageUsers) {
@@ -189,7 +201,7 @@ export class UsersManagementComponent implements OnInit {
   }
 
   editUser(row: UserEdit) {
-    this.editingUserName = { name: row.userName };
+    this.editingUserName = {name: row.userName};
     this.sourceUser = row;
     this.openUserEditor();
   }
@@ -253,17 +265,5 @@ export class UsersManagementComponent implements OnInit {
             MessageSeverity.error, error);
         }
       });
-  }
-
-  get canAssignRoles() {
-    return this.accountService.userHasPermission(Permission.assignRoles);
-  }
-
-  get canViewRoles() {
-    return this.accountService.userHasPermission(Permission.viewRoles);
-  }
-
-  get canManageUsers() {
-    return this.accountService.userHasPermission(Permission.manageUsers);
   }
 }

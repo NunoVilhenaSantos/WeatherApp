@@ -5,14 +5,11 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-using System;
+namespace DAL.Core;
 
-namespace DAL.Core
+public enum Gender
 {
-    public enum Gender
-    {
-        None,
-        Female,
-        Male
-    }
+    None,
+    Female,
+    Male
 }

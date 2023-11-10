@@ -5,15 +5,15 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component, OnInit, OnDestroy, Input, TemplateRef, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TableColumn } from '@swimlane/ngx-datatable';
+import {Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {TableColumn} from '@swimlane/ngx-datatable';
 
-import { AuthService } from '../../services/auth.service';
-import { AlertService, MessageSeverity, DialogType } from '../../services/alert.service';
-import { AppTranslationService } from '../../services/app-translation.service';
-import { LocalStoreManager } from '../../services/local-store-manager.service';
-import { Utilities } from '../../services/utilities';
+import {AuthService} from '../../services/auth.service';
+import {AlertService, DialogType, MessageSeverity} from '../../services/alert.service';
+import {AppTranslationService} from '../../services/app-translation.service';
+import {LocalStoreManager} from '../../services/local-store-manager.service';
+import {Utilities} from '../../services/utilities';
 
 
 interface Todo {
@@ -41,8 +41,26 @@ export class TodoDemoComponent implements OnInit, OnDestroy {
   isDataLoaded = false;
   loadingIndicator = true;
   formResetToggle = true;
+  @Input()
+  verticalScrollbar = false;
+  @ViewChild('statusHeaderTemplate', {static: true})
+  statusHeaderTemplate!: TemplateRef<unknown>;
+  @ViewChild('statusTemplate', {static: true})
+  statusTemplate!: TemplateRef<unknown>;
+  @ViewChild('nameTemplate', {static: true})
+  nameTemplate!: TemplateRef<unknown>;
+  @ViewChild('descriptionTemplate', {static: true})
+  descriptionTemplate!: TemplateRef<unknown>;
+  @ViewChild('actionsTemplate', {static: true})
+  actionsTemplate!: TemplateRef<unknown>;
+  @ViewChild('editorModal', {static: true})
+  editorModalTemplate!: TemplateRef<unknown>;
+
+  constructor(private alertService: AlertService, private translationService: AppTranslationService,
+              private localStorage: LocalStoreManager, private authService: AuthService, private modalService: NgbModal) {
+  }
+
   private _currentUserId: string | undefined;
-  private _hideCompletedTasks = false;
 
   get currentUserId() {
     if (this.authService.currentUser) {
@@ -50,6 +68,12 @@ export class TodoDemoComponent implements OnInit, OnDestroy {
     }
 
     return this._currentUserId;
+  }
+
+  private _hideCompletedTasks = false;
+
+  get hideCompletedTasks() {
+    return this._hideCompletedTasks;
   }
 
   set hideCompletedTasks(value: boolean) {
@@ -61,36 +85,6 @@ export class TodoDemoComponent implements OnInit, OnDestroy {
 
     this._hideCompletedTasks = value;
   }
-  get hideCompletedTasks() {
-    return this._hideCompletedTasks;
-  }
-
-
-  @Input()
-  verticalScrollbar = false;
-
-  @ViewChild('statusHeaderTemplate', { static: true })
-  statusHeaderTemplate!: TemplateRef<unknown>;
-
-  @ViewChild('statusTemplate', { static: true })
-  statusTemplate!: TemplateRef<unknown>;
-
-  @ViewChild('nameTemplate', { static: true })
-  nameTemplate!: TemplateRef<unknown>;
-
-  @ViewChild('descriptionTemplate', { static: true })
-  descriptionTemplate!: TemplateRef<unknown>;
-
-  @ViewChild('actionsTemplate', { static: true })
-  actionsTemplate!: TemplateRef<unknown>;
-
-  @ViewChild('editorModal', { static: true })
-  editorModalTemplate!: TemplateRef<unknown>;
-
-
-  constructor(private alertService: AlertService, private translationService: AppTranslationService,
-    private localStorage: LocalStoreManager, private authService: AuthService, private modalService: NgbModal) {
-  }
 
   ngOnInit() {
     this.loadingIndicator = true;
@@ -101,16 +95,41 @@ export class TodoDemoComponent implements OnInit, OnDestroy {
       this.rowsCache = [...data];
       this.isDataLoaded = true;
 
-      setTimeout(() => { this.loadingIndicator = false; }, 1500);
+      setTimeout(() => {
+        this.loadingIndicator = false;
+      }, 1500);
     });
 
     const gT = (key: string) => this.translationService.getTranslation(key);
 
     this.columns = [
-      { prop: 'completed', name: '', width: 30, headerTemplate: this.statusHeaderTemplate, cellTemplate: this.statusTemplate, resizeable: false, canAutoResize: false, sortable: false, draggable: false },
-      { prop: 'name', name: gT('todoDemo.management.Task'), cellTemplate: this.nameTemplate, width: 100 },
-      { prop: 'description', name: gT('todoDemo.management.Description'), cellTemplate: this.descriptionTemplate, width: 300 },
-      { name: '', width: 80, cellTemplate: this.actionsTemplate, resizeable: false, canAutoResize: false, sortable: false, draggable: false }
+      {
+        prop: 'completed',
+        name: '',
+        width: 30,
+        headerTemplate: this.statusHeaderTemplate,
+        cellTemplate: this.statusTemplate,
+        resizeable: false,
+        canAutoResize: false,
+        sortable: false,
+        draggable: false
+      },
+      {prop: 'name', name: gT('todoDemo.management.Task'), cellTemplate: this.nameTemplate, width: 100},
+      {
+        prop: 'description',
+        name: gT('todoDemo.management.Description'),
+        cellTemplate: this.descriptionTemplate,
+        width: 300
+      },
+      {
+        name: '',
+        width: 80,
+        cellTemplate: this.actionsTemplate,
+        resizeable: false,
+        canAutoResize: false,
+        sortable: false,
+        draggable: false
+      }
     ];
   }
 

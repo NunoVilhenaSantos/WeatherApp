@@ -5,10 +5,10 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 
-@Pipe({ name: 'groupBy' })
+@Pipe({name: 'groupBy'})
 export class GroupByPipe implements PipeTransform {
   transform<T>(collection: T[], property: keyof T) {
     if (!collection) {
@@ -28,6 +28,6 @@ export class GroupByPipe implements PipeTransform {
     }, {} as Record<string, T[]>);
 
     return Object.keys(groupedCollection)
-      .map(key => ({ key, value: groupedCollection[key] }));
+      .map(key => ({key, value: groupedCollection[key]}));
   }
 }

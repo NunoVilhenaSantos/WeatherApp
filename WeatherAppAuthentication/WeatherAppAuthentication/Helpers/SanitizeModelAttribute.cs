@@ -5,29 +5,23 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Linq;
+using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace WeatherAppAuthentication.Helpers
+namespace WeatherAppAuthentication.Helpers;
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class SanitizeModelAttribute : ActionFilterAttribute
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class SanitizeModelAttribute : ActionFilterAttribute
+    public override void OnActionExecuting(ActionExecutingContext context)
     {
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            foreach (var arg in context.ActionArguments.Values)
-            {
-                if (arg is ISanitizeModel model)
-                {
-                    model.SanitizeModel();
-                }
-            }
-        }
+        foreach (var arg in context.ActionArguments.Values)
+            if (arg is ISanitizeModel model)
+                model.SanitizeModel();
     }
+}
 
-    public interface ISanitizeModel
-    {
-        public void SanitizeModel();
-    }
+public interface ISanitizeModel
+{
+    public void SanitizeModel();
 }

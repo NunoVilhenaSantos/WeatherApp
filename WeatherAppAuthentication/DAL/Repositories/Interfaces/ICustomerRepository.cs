@@ -5,16 +5,13 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-using DAL.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using DAL.Models;
 
-namespace DAL.Repositories.Interfaces
+namespace DAL.Repositories.Interfaces;
+
+public interface ICustomerRepository : IRepository<Customer>
 {
-    public interface ICustomerRepository : IRepository<Customer>
-    {
-        IEnumerable<Customer> GetTopActiveCustomers(int count);
-        IEnumerable<Customer> GetAllCustomersData();
-    }
+    IEnumerable<Customer> GetTopActiveCustomers(int count);
+    IEnumerable<Customer> GetAllCustomersData();
 }

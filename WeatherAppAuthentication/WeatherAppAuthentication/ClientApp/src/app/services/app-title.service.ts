@@ -5,11 +5,11 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Injectable } from '@angular/core';
-import { TitleStrategy, RouterStateSnapshot } from '@angular/router';
-import { Title } from '@angular/platform-browser';
+import {Injectable} from '@angular/core';
+import {RouterStateSnapshot, TitleStrategy} from '@angular/router';
+import {Title} from '@angular/platform-browser';
 
-import { Utilities } from './utilities';
+import {Utilities} from './utilities';
 
 @Injectable()
 export class AppTitleService extends TitleStrategy {

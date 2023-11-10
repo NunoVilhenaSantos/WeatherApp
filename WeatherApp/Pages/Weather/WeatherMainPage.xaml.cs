@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Animations;
-using WeatherApp.Converters;
+﻿using WeatherApp.Converters;
 using WeatherApp.Data;
 using WeatherApp.Services;
 
@@ -87,7 +86,7 @@ public partial class WeatherMainPage : ContentPage, IDisposable
 
         _weatherData = weatherData;
 
-        BindingContext = _weatherData;       
+        BindingContext = _weatherData;
     }
 
 
@@ -261,6 +260,4 @@ public partial class WeatherMainPage : ContentPage, IDisposable
 
         TemperatureLabel.Text = $"{temperature:N1}";
     }
-
-
 }

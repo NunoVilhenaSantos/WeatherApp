@@ -5,17 +5,17 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, Input } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { TableColumn } from '@swimlane/ngx-datatable';
+import {Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {TableColumn} from '@swimlane/ngx-datatable';
 
-import { AlertService, DialogType, MessageSeverity } from '../../services/alert.service';
-import { AppTranslationService } from '../../services/app-translation.service';
-import { NotificationService } from '../../services/notification.service';
-import { AccountService } from '../../services/account.service';
-import { Permission } from '../../models/permission.model';
-import { Utilities } from '../../services/utilities';
-import { Notification } from '../../models/notification.model';
+import {AlertService, DialogType, MessageSeverity} from '../../services/alert.service';
+import {AppTranslationService} from '../../services/app-translation.service';
+import {NotificationService} from '../../services/notification.service';
+import {AccountService} from '../../services/account.service';
+import {Permission} from '../../models/permission.model';
+import {Utilities} from '../../services/utilities';
+import {Notification} from '../../models/notification.model';
 
 @Component({
   selector: 'app-notifications-viewer',
@@ -37,41 +37,70 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
   verticalScrollbar = false;
 
 
-  @ViewChild('statusHeaderTemplate', { static: true })
+  @ViewChild('statusHeaderTemplate', {static: true})
   statusHeaderTemplate!: TemplateRef<unknown>;
 
-  @ViewChild('statusTemplate', { static: true })
+  @ViewChild('statusTemplate', {static: true})
   statusTemplate!: TemplateRef<unknown>;
 
-  @ViewChild('dateTemplate', { static: true })
+  @ViewChild('dateTemplate', {static: true})
   dateTemplate!: TemplateRef<unknown>;
 
-  @ViewChild('contentHeaderTemplate', { static: true })
+  @ViewChild('contentHeaderTemplate', {static: true})
   contentHeaderTemplate!: TemplateRef<unknown>;
 
-  @ViewChild('contenBodytTemplate', { static: true })
+  @ViewChild('contenBodytTemplate', {static: true})
   contenBodytTemplate!: TemplateRef<unknown>;
 
-  @ViewChild('actionsTemplate', { static: true })
+  @ViewChild('actionsTemplate', {static: true})
   actionsTemplate!: TemplateRef<unknown>;
 
   constructor(private alertService: AlertService, private translationService: AppTranslationService,
-    private accountService: AccountService, private notificationService: NotificationService) {
+              private accountService: AccountService, private notificationService: NotificationService) {
+  }
+
+  get canManageNotifications() {
+    return this.accountService.userHasPermission(Permission.manageRoles); // Todo: Create separate permissions for notifications
   }
 
   ngOnInit() {
     if (this.isViewOnly) {
       this.columns = [
-        { prop: 'header', cellTemplate: this.contentHeaderTemplate, width: 200, resizeable: false, sortable: false, draggable: false },
+        {
+          prop: 'header',
+          cellTemplate: this.contentHeaderTemplate,
+          width: 200,
+          resizeable: false,
+          sortable: false,
+          draggable: false
+        },
       ];
     } else {
       const gT = (key: string) => this.translationService.getTranslation(key);
 
       this.columns = [
-        { prop: '', name: '', width: 10, headerTemplate: this.statusHeaderTemplate, cellTemplate: this.statusTemplate, resizeable: false, canAutoResize: false, sortable: false, draggable: false },
-        { prop: 'date', name: gT('notifications.Date'), cellTemplate: this.dateTemplate, width: 30 },
-        { prop: 'body', name: gT('notifications.Notification'), cellTemplate: this.contenBodytTemplate, width: 500 },
-        { name: '', width: 80, cellTemplate: this.actionsTemplate, resizeable: false, canAutoResize: false, sortable: false, draggable: false }
+        {
+          prop: '',
+          name: '',
+          width: 10,
+          headerTemplate: this.statusHeaderTemplate,
+          cellTemplate: this.statusTemplate,
+          resizeable: false,
+          canAutoResize: false,
+          sortable: false,
+          draggable: false
+        },
+        {prop: 'date', name: gT('notifications.Date'), cellTemplate: this.dateTemplate, width: 30},
+        {prop: 'body', name: gT('notifications.Notification'), cellTemplate: this.contenBodytTemplate, width: 500},
+        {
+          name: '',
+          width: 80,
+          cellTemplate: this.actionsTemplate,
+          resizeable: false,
+          canAutoResize: false,
+          sortable: false,
+          draggable: false
+        }
       ];
     }
 
@@ -112,16 +141,6 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
           }
         }
       });
-  }
-
-  private processResults(notifications: Notification[]) {
-    if (this.isViewOnly) {
-      notifications.sort((a, b) => {
-        return b.date.valueOf() - a.date.valueOf();
-      });
-    }
-
-    return notifications;
   }
 
   getPrintedDate(value: Date) {
@@ -186,7 +205,13 @@ export class NotificationsViewerComponent implements OnInit, OnDestroy {
       });
   }
 
-  get canManageNotifications() {
-    return this.accountService.userHasPermission(Permission.manageRoles); // Todo: Create separate permissions for notifications
+  private processResults(notifications: Notification[]) {
+    if (this.isViewOnly) {
+      notifications.sort((a, b) => {
+        return b.date.valueOf() - a.date.valueOf();
+      });
+    }
+
+    return notifications;
   }
 }

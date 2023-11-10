@@ -26,8 +26,7 @@
   .bg-features {
     @if $enable-rounded {
       border-radius: $border-radius !important;
-    }
-    @else {
+    } @else {
       border-radius: 0 !important;
     }
   }

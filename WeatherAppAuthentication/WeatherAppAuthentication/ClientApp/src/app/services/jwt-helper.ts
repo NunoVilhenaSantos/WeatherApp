@@ -8,7 +8,7 @@
 /**
  * Helper class to decode and find JWT expiration.
  */
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 
 @Injectable()
@@ -17,21 +17,22 @@ export class JwtHelper {
   public urlBase64Decode(str: string): string {
     let output = str.replace(/-/g, '+').replace(/_/g, '/');
     switch (output.length % 4) {
-      case 0: { break; }
-      case 2: { output += '=='; break; }
-      case 3: { output += '='; break; }
+      case 0: {
+        break;
+      }
+      case 2: {
+        output += '==';
+        break;
+      }
+      case 3: {
+        output += '=';
+        break;
+      }
       default: {
         throw new Error('Illegal base64url string!');
       }
     }
     return this.b64DecodeUnicode(output);
-  }
-
-  // https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
-  private b64DecodeUnicode(str: string) {
-    return decodeURIComponent(Array.prototype.map.call(atob(str), c => {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
   }
 
   public decodeToken(token: string) {
@@ -72,5 +73,12 @@ export class JwtHelper {
 
     // Token expired?
     return !(date.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)));
+  }
+
+  // https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
+  private b64DecodeUnicode(str: string) {
+    return decodeURIComponent(Array.prototype.map.call(atob(str), c => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
   }
 }

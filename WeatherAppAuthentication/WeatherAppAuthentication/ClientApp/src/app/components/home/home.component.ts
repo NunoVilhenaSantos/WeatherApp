@@ -5,13 +5,16 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { fadeInOut } from '../../services/animations';
-import { ConfigurationService } from '../../services/configuration.service';
-import { AuthService } from '../../services/auth.service';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {fadeInOut} from '../../services/animations';
+import {ConfigurationService} from '../../services/configuration.service';
+import {AuthService} from '../../services/auth.service';
 
-interface WidgetIndex { element: string, index: number }
+interface WidgetIndex {
+  element: string,
+  index: number
+}
 
 @Component({
   selector: 'app-home',
@@ -23,7 +26,7 @@ export class HomeComponent implements AfterViewInit {
   dragStartDelay = 200;
   readonly DBKeyWidgetsOrder = 'home-component.widgets_order';
 
-  @ViewChild('widgetsContainer', { read: ElementRef })
+  @ViewChild('widgetsContainer', {read: ElementRef})
   widgetsContainer!: ElementRef<HTMLDivElement>;
 
   constructor(private authService: AuthService, public configurations: ConfigurationService) {
@@ -75,7 +78,7 @@ export class HomeComponent implements AfterViewInit {
     const widgetIndexes = new Array<WidgetIndex>(parentEle.children.length);
 
     for (let i = 0; i < parentEle.children.length; i++) {
-      widgetIndexes[i] = { element: parentEle.children[i].id, index: i };
+      widgetIndexes[i] = {element: parentEle.children[i].id, index: i};
     }
 
     moveItemInArray(widgetIndexes, event.previousIndex, event.currentIndex);

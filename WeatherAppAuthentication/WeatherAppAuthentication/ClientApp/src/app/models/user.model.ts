@@ -6,6 +6,10 @@
 // ---------------------------------------------------
 
 export class User {
+  public isEnabled = true;
+  public isLockedOut = false;
+  public roles: string[] = [];
+
   constructor(
     public id = '',
     public userName = '',
@@ -28,8 +32,4 @@ export class User {
 
     return name;
   }
-
-  public isEnabled = true;
-  public isLockedOut = false;
-  public roles: string[] = [];
 }

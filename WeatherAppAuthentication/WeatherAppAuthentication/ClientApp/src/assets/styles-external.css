@@ -8,28 +8,28 @@
   z-index: 999999;
 }
 
-  #pre-bootstrap div.messaging {
-    color: #FFFFFF;
-    font-family: monospace;
-    left: 0;
-    margin-top: -107px;
-    position: absolute;
-    right: 0;
-    text-align: center;
-    top: 50%;
-  }
+#pre-bootstrap div.messaging {
+  color: #FFFFFF;
+  font-family: monospace;
+  left: 0;
+  margin-top: -107px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 50%;
+}
 
-  #pre-bootstrap h1 {
-    font-size: 26px;
-    line-height: 35px;
-    margin: 0 0 20px 0;
-  }
+#pre-bootstrap h1 {
+  font-size: 26px;
+  line-height: 35px;
+  margin: 0 0 20px 0;
+}
 
-  #pre-bootstrap p {
-    font-size: 18px;
-    line-height: 32px;
-    margin: 0 0 0 0;
-  }
+#pre-bootstrap p {
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0 0 0 0;
+}
 
 
 .prebootShow {
@@ -59,12 +59,12 @@
   text-align: center;
 }
 
-  .cs-loader-inner label {
-    font-size: 20px;
-    opacity: 0;
-    display: inline-block;
-    color: gray;
-  }
+.cs-loader-inner label {
+  font-size: 20px;
+  opacity: 0;
+  display: inline-block;
+  color: gray;
+}
 
 @keyframes lol {
   0% {

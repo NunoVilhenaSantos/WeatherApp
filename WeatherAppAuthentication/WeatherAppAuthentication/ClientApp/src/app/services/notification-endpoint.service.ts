@@ -5,9 +5,9 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Injectable } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
 
 
 @Injectable()
@@ -100,6 +100,6 @@ export class NotificationEndpoint {
     if (errorCode == null)
       return of(data);
     else
-      return throwError(() => new HttpErrorResponse({ status: errorCode, error: 'Demo. An error occured' }));
+      return throwError(() => new HttpErrorResponse({status: errorCode, error: 'Demo. An error occured'}));
   }
 }

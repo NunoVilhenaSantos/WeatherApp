@@ -5,30 +5,52 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
-import { AuthService } from './auth.service';
-import { EndpointBase } from './endpoint-base.service';
-import { ConfigurationService } from './configuration.service';
+import {AuthService} from './auth.service';
+import {EndpointBase} from './endpoint-base.service';
+import {ConfigurationService} from './configuration.service';
 
 
 @Injectable()
 export class AccountEndpoint extends EndpointBase {
-  get usersUrl() { return this.configurations.baseUrl + '/api/account/users'; }
-  get userByUserNameUrl() { return this.configurations.baseUrl + '/api/account/users/username'; }
-  get currentUserUrl() { return this.configurations.baseUrl + '/api/account/users/me'; }
-  get currentUserPreferencesUrl() { return this.configurations.baseUrl + '/api/account/users/me/preferences'; }
-  get unblockUserUrl() { return this.configurations.baseUrl + '/api/account/users/unblock'; }
-  get rolesUrl() { return this.configurations.baseUrl + '/api/account/roles'; }
-  get roleByRoleNameUrl() { return this.configurations.baseUrl + '/api/account/roles/name'; }
-  get permissionsUrl() { return this.configurations.baseUrl + '/api/account/permissions'; }
-
-
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
+  }
+
+  get usersUrl() {
+    return this.configurations.baseUrl + '/api/account/users';
+  }
+
+  get userByUserNameUrl() {
+    return this.configurations.baseUrl + '/api/account/users/username';
+  }
+
+  get currentUserUrl() {
+    return this.configurations.baseUrl + '/api/account/users/me';
+  }
+
+  get currentUserPreferencesUrl() {
+    return this.configurations.baseUrl + '/api/account/users/me/preferences';
+  }
+
+  get unblockUserUrl() {
+    return this.configurations.baseUrl + '/api/account/users/unblock';
+  }
+
+  get rolesUrl() {
+    return this.configurations.baseUrl + '/api/account/roles';
+  }
+
+  get roleByRoleNameUrl() {
+    return this.configurations.baseUrl + '/api/account/roles/name';
+  }
+
+  get permissionsUrl() {
+    return this.configurations.baseUrl + '/api/account/permissions';
   }
 
   getUserEndpoint<T>(userId?: string): Observable<T> {
@@ -82,7 +104,11 @@ export class AccountEndpoint extends EndpointBase {
 
     if (path) {
       endpointUrl = userId ? `${this.usersUrl}/${userId}` : this.currentUserUrl;
-      patchDocument = from ? [{ op: opOrUserId, from: from, path: path }] : [{ op: opOrUserId, path: path, value: valueOrPatch }];
+      patchDocument = from ? [{op: opOrUserId, from: from, path: path}] : [{
+        op: opOrUserId,
+        path: path,
+        value: valueOrPatch
+      }];
     } else {
       endpointUrl = opOrUserId ? `${this.usersUrl}/${opOrUserId}` : this.currentUserUrl;
       patchDocument = valueOrPatch;

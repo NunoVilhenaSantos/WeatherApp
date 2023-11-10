@@ -5,10 +5,10 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateService, TranslateLoader } from '@ngx-translate/core';
-import { Subject, of } from 'rxjs';
+import {inject, Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {TranslateLoader, TranslateService} from '@ngx-translate/core';
+import {of, Subject} from 'rxjs';
 
 import * as fallbackLangData from '../../assets/locale/en.json';
 

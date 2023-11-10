@@ -5,17 +5,17 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { NgModel, NgForm } from '@angular/forms';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
+import {NgForm, NgModel} from '@angular/forms';
 
-import { AlertService, MessageSeverity } from '../../services/alert.service';
-import { AccountService } from '../../services/account.service';
-import { Utilities } from '../../services/utilities';
-import { User } from '../../models/user.model';
-import { UserEdit } from '../../models/user-edit.model';
-import { Role } from '../../models/role.model';
-import { Permission } from '../../models/permission.model';
+import {AlertService, MessageSeverity} from '../../services/alert.service';
+import {AccountService} from '../../services/account.service';
+import {Utilities} from '../../services/utilities';
+import {User} from '../../models/user.model';
+import {UserEdit} from '../../models/user-edit.model';
+import {Role} from '../../models/role.model';
+import {Permission} from '../../models/permission.model';
 
 @Component({
   selector: 'app-user-info',
@@ -79,45 +79,20 @@ export class UserInfoComponent implements OnInit {
   constructor(private alertService: AlertService, private accountService: AccountService) {
   }
 
+  get canViewAllRoles() {
+    return this.accountService.userHasPermission(Permission.viewRoles);
+  }
+
+  get canAssignRoles() {
+    return this.accountService.userHasPermission(Permission.assignRoles);
+  }
+
   ngOnInit() {
     if (!this.isGeneralEditor) {
       this.loadCurrentUserData();
     }
 
     this.afterOnInit.emit(this);
-  }
-
-  private loadCurrentUserData() {
-    this.alertService.startLoadingMessage();
-
-    if (this.canViewAllRoles) {
-      this.accountService.getUserAndRoles()
-        .subscribe({
-          next: results => this.onCurrentUserDataLoadSuccessful(results[0], results[1]),
-          error: error => this.onCurrentUserDataLoadFailed(error)
-        });
-    } else {
-      this.accountService.getUser()
-        .subscribe({
-          next: user => this.onCurrentUserDataLoadSuccessful(user, user.roles.map(role => new Role(role))),
-          error: error => this.onCurrentUserDataLoadFailed(error)
-        });
-    }
-  }
-
-  private onCurrentUserDataLoadSuccessful(user: User, roles: Role[]) {
-    this.alertService.stopLoadingMessage();
-    this.user = user;
-    this.allRoles = roles;
-  }
-
-  private onCurrentUserDataLoadFailed(error: HttpErrorResponse) {
-    this.alertService.stopLoadingMessage();
-    this.alertService.showStickyMessage('Load Error',
-      `Unable to retrieve user data from the server.\r\nError: "${Utilities.getHttpResponseMessage(error)}"`,
-      MessageSeverity.error, error);
-
-    this.user = new User();
   }
 
   getRoleByName(name: string) {
@@ -173,65 +148,6 @@ export class UserInfoComponent implements OnInit {
     }
   }
 
-  private saveSuccessHelper(user?: User) {
-    this.testIsRoleUserCountChanged(this.user, this.userEdit);
-
-    if (user) {
-      Object.assign(this.userEdit, user);
-    }
-
-    this.isSaving = false;
-    this.alertService.stopLoadingMessage();
-    this.isChangePassword = false;
-    this.showValidationErrors = false;
-
-    this.deletePasswordFromUser(this.userEdit);
-    Object.assign(this.user, this.userEdit);
-    this.userEdit = new UserEdit();
-    this.resetForm();
-
-    if (this.isGeneralEditor) {
-      if (this.isNewUser) {
-        this.alertService.showMessage('Success', `User "${this.user.userName}" was created successfully`, MessageSeverity.success);
-      } else if (!this.isEditingSelf) {
-        this.alertService.showMessage('Success', `Changes to user "${this.user.userName}" was saved successfully`, MessageSeverity.success);
-      }
-    }
-
-    if (this.isEditingSelf) {
-      this.alertService.showMessage('Success', 'Changes to your User Profile was saved successfully', MessageSeverity.success);
-      this.refreshLoggedInUser();
-    }
-
-    this.isEditMode = false;
-
-    if (this.changesSavedCallback) {
-      this.changesSavedCallback();
-    }
-  }
-
-  private saveFailedHelper(error: HttpErrorResponse) {
-    this.isSaving = false;
-    this.alertService.stopLoadingMessage();
-    this.alertService.showStickyMessage('Save Error', 'The below errors occurred whilst saving your changes:', MessageSeverity.error, error);
-    this.alertService.showStickyMessage(error, null, MessageSeverity.error);
-
-    if (this.changesFailedCallback) {
-      this.changesFailedCallback();
-    }
-  }
-
-  private testIsRoleUserCountChanged(currentUser: User, editedUser: User) {
-    const rolesAdded = this.isNewUser ? editedUser.roles : editedUser.roles.filter(role => currentUser.roles.indexOf(role) === -1);
-    const rolesRemoved = this.isNewUser ? [] : currentUser.roles.filter(role => editedUser.roles.indexOf(role) === -1);
-
-    const modifiedRoles = rolesAdded.concat(rolesRemoved);
-
-    if (modifiedRoles.length) {
-      setTimeout(() => this.accountService.onRolesUserCountChanged(modifiedRoles));
-    }
-  }
-
   cancel() {
     if (this.isGeneralEditor) {
       this.userEdit = this.user = new UserEdit();
@@ -263,20 +179,6 @@ export class UserInfoComponent implements OnInit {
     if (this.changesSavedCallback) {
       this.changesSavedCallback();
     }
-  }
-
-  private refreshLoggedInUser() {
-    this.accountService.refreshLoggedInUser()
-      .subscribe({
-        next: () => {
-          this.loadCurrentUserData();
-        },
-        error: error => {
-          this.alertService.resetStickyMessage();
-          this.alertService.showStickyMessage('Refresh failed',
-            'An error occurred whilst refreshing logged in user information from the server', MessageSeverity.error, error);
-        }
-      });
   }
 
   changePassword() {
@@ -358,6 +260,112 @@ export class UserInfoComponent implements OnInit {
     this.isEditMode = false;
   }
 
+  private loadCurrentUserData() {
+    this.alertService.startLoadingMessage();
+
+    if (this.canViewAllRoles) {
+      this.accountService.getUserAndRoles()
+        .subscribe({
+          next: results => this.onCurrentUserDataLoadSuccessful(results[0], results[1]),
+          error: error => this.onCurrentUserDataLoadFailed(error)
+        });
+    } else {
+      this.accountService.getUser()
+        .subscribe({
+          next: user => this.onCurrentUserDataLoadSuccessful(user, user.roles.map(role => new Role(role))),
+          error: error => this.onCurrentUserDataLoadFailed(error)
+        });
+    }
+  }
+
+  private onCurrentUserDataLoadSuccessful(user: User, roles: Role[]) {
+    this.alertService.stopLoadingMessage();
+    this.user = user;
+    this.allRoles = roles;
+  }
+
+  private onCurrentUserDataLoadFailed(error: HttpErrorResponse) {
+    this.alertService.stopLoadingMessage();
+    this.alertService.showStickyMessage('Load Error',
+      `Unable to retrieve user data from the server.\r\nError: "${Utilities.getHttpResponseMessage(error)}"`,
+      MessageSeverity.error, error);
+
+    this.user = new User();
+  }
+
+  private saveSuccessHelper(user?: User) {
+    this.testIsRoleUserCountChanged(this.user, this.userEdit);
+
+    if (user) {
+      Object.assign(this.userEdit, user);
+    }
+
+    this.isSaving = false;
+    this.alertService.stopLoadingMessage();
+    this.isChangePassword = false;
+    this.showValidationErrors = false;
+
+    this.deletePasswordFromUser(this.userEdit);
+    Object.assign(this.user, this.userEdit);
+    this.userEdit = new UserEdit();
+    this.resetForm();
+
+    if (this.isGeneralEditor) {
+      if (this.isNewUser) {
+        this.alertService.showMessage('Success', `User "${this.user.userName}" was created successfully`, MessageSeverity.success);
+      } else if (!this.isEditingSelf) {
+        this.alertService.showMessage('Success', `Changes to user "${this.user.userName}" was saved successfully`, MessageSeverity.success);
+      }
+    }
+
+    if (this.isEditingSelf) {
+      this.alertService.showMessage('Success', 'Changes to your User Profile was saved successfully', MessageSeverity.success);
+      this.refreshLoggedInUser();
+    }
+
+    this.isEditMode = false;
+
+    if (this.changesSavedCallback) {
+      this.changesSavedCallback();
+    }
+  }
+
+  private saveFailedHelper(error: HttpErrorResponse) {
+    this.isSaving = false;
+    this.alertService.stopLoadingMessage();
+    this.alertService.showStickyMessage('Save Error', 'The below errors occurred whilst saving your changes:', MessageSeverity.error, error);
+    this.alertService.showStickyMessage(error, null, MessageSeverity.error);
+
+    if (this.changesFailedCallback) {
+      this.changesFailedCallback();
+    }
+  }
+
+  private testIsRoleUserCountChanged(currentUser: User, editedUser: User) {
+    const rolesAdded = this.isNewUser ? editedUser.roles : editedUser.roles.filter(role => currentUser.roles.indexOf(role) === -1);
+    const rolesRemoved = this.isNewUser ? [] : currentUser.roles.filter(role => editedUser.roles.indexOf(role) === -1);
+
+    const modifiedRoles = rolesAdded.concat(rolesRemoved);
+
+    if (modifiedRoles.length) {
+      setTimeout(() => this.accountService.onRolesUserCountChanged(modifiedRoles));
+    }
+  }
+
+  private refreshLoggedInUser() {
+    this.accountService.refreshLoggedInUser()
+      .subscribe({
+        next: () => {
+          this.loadCurrentUserData();
+        },
+        error: error => {
+          this.alertService.resetStickyMessage();
+          this.alertService.showStickyMessage('Refresh failed',
+            'An error occurred whilst refreshing logged in user information from the server', MessageSeverity.error, error);
+        }
+      });
+  }
+
   private setRoles(user: User, allRoles?: Role[]) {
     this.allRoles = allRoles ? [...allRoles] : [];
 
@@ -366,13 +374,5 @@ export class UserInfoComponent implements OnInit {
         this.allRoles.unshift(new Role(role));
       }
     }
-  }
-
-  get canViewAllRoles() {
-    return this.accountService.userHasPermission(Permission.viewRoles);
-  }
-
-  get canAssignRoles() {
-    return this.accountService.userHasPermission(Permission.assignRoles);
   }
 }

@@ -5,79 +5,80 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-using DAL.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
-namespace DAL.Repositories
+namespace DAL.Repositories;
+
+public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    protected readonly DbContext Context;
+    protected readonly DbSet<TEntity> Entities;
+
+    public Repository(DbContext context)
     {
-        protected readonly DbContext _context;
-        protected readonly DbSet<TEntity> _entities;
+        Context = context;
+        Entities = context.Set<TEntity>();
+    }
 
-        public Repository(DbContext context)
-        {
-            _context = context;
-            _entities = context.Set<TEntity>();
-        }
+    public virtual void Add(TEntity entity)
+    {
+        Entities.Add(entity);
+    }
 
-        public virtual void Add(TEntity entity)
-        {
-            _entities.Add(entity);
-        }
+    public virtual void AddRange(IEnumerable<TEntity> entities)
+    {
+        Entities.AddRange(entities);
+    }
 
-        public virtual void AddRange(IEnumerable<TEntity> entities)
-        {
-            _entities.AddRange(entities);
-        }
+    public virtual void Update(TEntity entity)
+    {
+        Entities.Update(entity);
+    }
 
-        public virtual void Update(TEntity entity)
-        {
-            _entities.Update(entity);
-        }
+    public virtual void UpdateRange(IEnumerable<TEntity> entities)
+    {
+        Entities.UpdateRange(entities);
+    }
 
-        public virtual void UpdateRange(IEnumerable<TEntity> entities)
-        {
-            _entities.UpdateRange(entities);
-        }
+    public virtual void Remove(TEntity entity)
+    {
+        Entities.Remove(entity);
+    }
 
-        public virtual void Remove(TEntity entity)
-        {
-            _entities.Remove(entity);
-        }
+    public virtual void RemoveRange(IEnumerable<TEntity> entities)
+    {
+        Entities.RemoveRange(entities);
+    }
 
-        public virtual void RemoveRange(IEnumerable<TEntity> entities)
-        {
-            _entities.RemoveRange(entities);
-        }
+    public virtual int Count()
+    {
+        return Entities.Count();
+    }
 
-        public virtual int Count()
-        {
-            return _entities.Count();
-        }
+    public virtual IEnumerable<TEntity> Find(
+        Expression<Func<TEntity, bool>> predicate)
+    {
+        return Entities.Where(predicate);
+    }
 
-        public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _entities.Where(predicate);
-        }
+    public virtual TEntity GetSingleOrDefault(
+        Expression<Func<TEntity, bool>> predicate)
+    {
+        return Entities.SingleOrDefault(predicate);
+    }
 
-        public virtual TEntity GetSingleOrDefault(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _entities.SingleOrDefault(predicate);
-        }
+    public virtual TEntity Get(int id)
+    {
+        return Entities.Find(id);
+    }
 
-        public virtual TEntity Get(int id)
-        {
-            return _entities.Find(id);
-        }
-
-        public virtual IEnumerable<TEntity> GetAll()
-        {
-            return _entities.ToList();
-        }
+    public virtual IEnumerable<TEntity> GetAll()
+    {
+        return Entities.ToList();
     }
 }

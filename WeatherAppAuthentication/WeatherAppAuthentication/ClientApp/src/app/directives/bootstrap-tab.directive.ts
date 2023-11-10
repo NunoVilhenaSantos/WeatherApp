@@ -5,8 +5,8 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Directive, ElementRef, Output, EventEmitter, OnDestroy, NgZone } from '@angular/core';
-import { Subscription, fromEvent } from 'rxjs';
+import {Directive, ElementRef, EventEmitter, NgZone, OnDestroy, Output} from '@angular/core';
+import {fromEvent, Subscription} from 'rxjs';
 
 declare let bootstrap: {
   Tab: {
@@ -14,7 +14,11 @@ declare let bootstrap: {
   }
 }
 
-export interface EventArg { type: string; target: Element; relatedTarget: Element; }
+export interface EventArg {
+  type: string;
+  target: Element;
+  relatedTarget: Element;
+}
 
 @Directive({
   selector: '[appBootstrapTab]',
@@ -34,13 +38,21 @@ export class BootstrapTabDirective implements OnDestroy {
     this.tabShownSubscription = fromEvent(this.el.nativeElement, 'show.bs.tab')
       .subscribe(e => {
         const arg = e as EventArg;
-        this.runInZone(() => this.showBSTab.emit({ type: arg.type, target: arg.target, relatedTarget: arg.relatedTarget }));
+        this.runInZone(() => this.showBSTab.emit({
+          type: arg.type,
+          target: arg.target,
+          relatedTarget: arg.relatedTarget
+        }));
       });
 
     this.tabHiddenSubscription = fromEvent(this.el.nativeElement, 'hidden.bs.tab')
       .subscribe(e => {
         const arg = e as EventArg;
-        this.runInZone(() => this.hideBSTab.emit({ type: arg.type, target: arg.target, relatedTarget: arg.relatedTarget }));
+        this.runInZone(() => this.hideBSTab.emit({
+          type: arg.type,
+          target: arg.target,
+          relatedTarget: arg.relatedTarget
+        }));
       });
   }
 
@@ -49,14 +61,14 @@ export class BootstrapTabDirective implements OnDestroy {
     this.tabHiddenSubscription.unsubscribe();
   }
 
+  show(selector: string) {
+    const tab = bootstrap.Tab.getOrCreateInstance(selector);
+    setTimeout(() => tab.show());
+  }
+
   private runInZone(delegate: () => void) {
     this.zone.run(() => {
       delegate();
     });
-  }
-
-  show(selector: string) {
-    const tab = bootstrap.Tab.getOrCreateInstance(selector);
-    setTimeout(() => tab.show());
   }
 }

@@ -5,15 +5,15 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { AlertService, DialogType, MessageSeverity } from '../../services/alert.service';
-import { ConfigurationService } from '../../services/configuration.service';
-import { AppTranslationService } from '../../services/app-translation.service';
-import { AccountService } from '../../services/account.service';
-import { ThemeManager } from '../../services/theme-manager';
-import { Utilities } from '../../services/utilities';
-import { Permission } from '../../models/permission.model';
+import {AlertService, DialogType, MessageSeverity} from '../../services/alert.service';
+import {ConfigurationService} from '../../services/configuration.service';
+import {AppTranslationService} from '../../services/app-translation.service';
+import {AccountService} from '../../services/account.service';
+import {ThemeManager} from '../../services/theme-manager';
+import {Utilities} from '../../services/utilities';
+import {Permission} from '../../models/permission.model';
 
 
 @Component({
@@ -28,6 +28,18 @@ export class UserPreferencesComponent {
     private accountService: AccountService,
     public themeManager: ThemeManager,
     public configurations: ConfigurationService) {
+  }
+
+  get canViewCustomers() {
+    return this.accountService.userHasPermission(Permission.viewUsers); // eg. viewCustomersPermission
+  }
+
+  get canViewProducts() {
+    return this.accountService.userHasPermission(Permission.viewUsers); // eg. viewProductsPermission
+  }
+
+  get canViewOrders() {
+    return true; // eg. viewOrdersPermission
   }
 
   reloadFromServer() {
@@ -98,17 +110,5 @@ export class UserPreferencesComponent {
             MessageSeverity.error, error);
         }
       });
-  }
-
-  get canViewCustomers() {
-    return this.accountService.userHasPermission(Permission.viewUsers); // eg. viewCustomersPermission
-  }
-
-  get canViewProducts() {
-    return this.accountService.userHasPermission(Permission.viewUsers); // eg. viewProductsPermission
-  }
-
-  get canViewOrders() {
-    return true; // eg. viewOrdersPermission
   }
 }

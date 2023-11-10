@@ -5,7 +5,7 @@
 // --> Gun4Hire: contact@ebenmonney.com
 // ---------------------------------------------------
 
-import { PermissionValues } from './permission.model';
+import {PermissionValues} from './permission.model';
 
 
 export interface LoginResponse {

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage
     x:Class="WeatherApp.WeatherMainPage"
@@ -9,13 +9,12 @@
     BackgroundColor="{DynamicResource SecondaryColor}">
 
 
-    <!--  Conteúdo principal  -->
+    <!--  Conteúdo principal | Main content  -->
     <ContentPage.Resources>
 
         <ResourceDictionary>
 
             <converters:FahrenheitCelsiusConverter x:Key="FahrenheitToCelsiusConverter" />
-            <converters:FahrenheitKelvinConverter x:Key="FahrenheitToKelvinConverter" />
             <converters:LongToDateTimeConverter x:Key="LongToDatetimeConverter" />
             <converters:StringToImageConverter x:Key="StringToImageConverter" />
 
@@ -583,7 +582,6 @@
                     <!--  Grid.Column="1"  -->
                     <Button
                         x:Name="GetWeatherButton"
-                        Grid.Column="1"
                         BackgroundColor="{StaticResource EntryStyle}"
                         BorderColor="White"
                         BorderWidth="1"
@@ -612,7 +610,6 @@
                     <!--  Grid.Column="1"  -->
                     <Button
                         x:Name="GetCitiesGeoCodingButton"
-                        Grid.Column="1"
                         BackgroundColor="{StaticResource EntryStyle}"
                         BorderColor="White"
                         BorderWidth="1"

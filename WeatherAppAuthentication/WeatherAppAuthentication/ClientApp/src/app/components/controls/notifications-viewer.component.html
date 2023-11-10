@@ -1,14 +1,14 @@
 <div>
-  <ngx-datatable class="material colored-header sm table-hover"
-                 [loadingIndicator]="loadingIndicator"
-                 [rows]="rows"
-                 [rowHeight]="isViewOnly ? 'auto' : 35"
-                 [headerHeight]="isViewOnly ? 0 : 37"
-                 [footerHeight]="isViewOnly ? 0 :35"
-                 [limit]="10"
+  <ngx-datatable [columnMode]="'force'"
                  [columns]="columns"
+                 [footerHeight]="isViewOnly ? 0 :35"
+                 [headerHeight]="isViewOnly ? 0 : 37"
+                 [limit]="10"
+                 [loadingIndicator]="loadingIndicator"
+                 [rowHeight]="isViewOnly ? 'auto' : 35"
+                 [rows]="rows"
                  [scrollbarV]="verticalScrollbar"
-                 [columnMode]="'force'">
+                 class="material colored-header sm table-hover">
   </ngx-datatable>
 
   <ng-template #statusHeaderTemplate>
@@ -39,10 +39,12 @@
 
 
   <ng-template #actionsTemplate let-row="row">
-    <a class="btn btn-link btn-sm" href="javascript:;" ngbTooltip="{{'notifications.Delete' | translate}}" container="body" (click)="deleteNotification(row)">
+    <a (click)="deleteNotification(row)" class="btn btn-link btn-sm" container="body"
+       href="javascript:" ngbTooltip="{{'notifications.Delete' | translate}}">
       <i class="fa fa-times"></i>
     </a>
-    <a class="btn btn-link btn-sm" href="javascript:;" ngbTooltip="{{'notifications.Pin' | translate}}" container="body" (click)="togglePin(row)">
+    <a (click)="togglePin(row)" class="btn btn-link btn-sm" container="body" href="javascript:"
+       ngbTooltip="{{'notifications.Pin' | translate}}">
       <i [ngClass]="row.isPinned ? 'fa fa-thumb-tack' : 'fa fa-thumb-tack fa-rotate-90'"></i>
     </a>
   </ng-template>

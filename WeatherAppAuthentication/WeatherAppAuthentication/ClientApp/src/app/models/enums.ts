@@ -6,7 +6,7 @@
 // ---------------------------------------------------
 
 export enum Gender {
-    None,
-    Female,
-    Male
+  None,
+  Female,
+  Male
 }
