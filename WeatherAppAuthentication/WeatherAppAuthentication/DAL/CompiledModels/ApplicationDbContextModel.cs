@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 #pragma warning disable 219, 612, 618
-#nullable disable
+#nullable enable
 
 namespace WeatherAppAuthentication.DAL.CompiledModels
 {

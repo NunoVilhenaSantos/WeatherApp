@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 #pragma warning disable 219, 612, 618
-#nullable disable
+#nullable enable
 
 namespace WeatherAppAuthentication.DAL.CompiledModels
 {
     internal partial class IdentityRoleClaimEntityType
     {
-        public static RuntimeEntityType Create(RuntimeModel model, RuntimeEntityType baseEntityType = null)
+        public static RuntimeEntityType Create(RuntimeModel model, RuntimeEntityType? baseEntityType = null)
         {
             var runtimeEntityType = model.AddEntityType(
                 "Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>",
@@ -28,7 +28,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 fieldInfo: typeof(IdentityRoleClaim<string>).GetField("<Id>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 valueGenerated: ValueGenerated.OnAdd,
                 afterSaveBehavior: PropertySaveBehavior.Throw);
-            id.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             var claimType = runtimeEntityType.AddProperty(
                 "ClaimType",
@@ -36,7 +35,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(IdentityRoleClaim<string>).GetProperty("ClaimType", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(IdentityRoleClaim<string>).GetField("<ClaimType>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
-            claimType.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var claimValue = runtimeEntityType.AddProperty(
                 "ClaimValue",
@@ -44,14 +42,12 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(IdentityRoleClaim<string>).GetProperty("ClaimValue", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(IdentityRoleClaim<string>).GetField("<ClaimValue>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
-            claimValue.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var roleId = runtimeEntityType.AddProperty(
                 "RoleId",
                 typeof(string),
                 propertyInfo: typeof(IdentityRoleClaim<string>).GetProperty("RoleId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(IdentityRoleClaim<string>).GetField("<RoleId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
-            roleId.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var key = runtimeEntityType.AddKey(
                 new[] { id });
@@ -65,8 +61,8 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
 
         public static RuntimeForeignKey CreateForeignKey1(RuntimeEntityType declaringEntityType, RuntimeEntityType principalEntityType)
         {
-            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("RoleId") },
-                principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id") }),
+            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("RoleId")! },
+                principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id")! })!,
                 principalEntityType,
                 deleteBehavior: DeleteBehavior.Cascade,
                 required: true);

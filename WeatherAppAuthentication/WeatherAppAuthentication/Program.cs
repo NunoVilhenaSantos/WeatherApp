@@ -55,11 +55,11 @@ public class Program
 
     private static void AddServices(WebApplicationBuilder builder)
     {
-        // var connectionString = 
-        //     builder.Configuration.GetConnectionString("DefaultConnection") ??
-        //     throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
         var connectionString =
+            builder.Configuration.GetConnectionString("DefaultConnection") ??
+            throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+        var connectionStringMySQLLocal =
             builder.Configuration.GetConnectionString("MySQL-Local") ??
             throw new InvalidOperationException(
                 "Connection string 'MySQL-Local' not found.");
@@ -79,7 +79,7 @@ public class Program
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseMySQL(connectionString,
+            options.UseMySQL(connectionStringMySQLLocal,
                 b => b.MigrationsAssembly(migrationsAssembly));
             options.UseOpenIddict();
             options.EnableSensitiveDataLogging()
@@ -300,16 +300,19 @@ public class Program
             c.OAuthClientId(OidcServerManager.SwaggerClientID);
         });
 
+
         app.MapControllerRoute(
             "default",
             "{controller}/{action=Index}/{id?}");
 
+        
         app.Map("api/{**slug}", context =>
         {
             context.Response.StatusCode = StatusCodes.Status404NotFound;
             return Task.CompletedTask;
         });
 
+        
         app.MapFallbackToFile("index.html");
     }
 

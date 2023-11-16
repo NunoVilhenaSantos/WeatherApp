@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 #pragma warning disable 219, 612, 618
-#nullable disable
+#nullable enable
 
 namespace WeatherAppAuthentication.DAL.CompiledModels
 {
     internal partial class IdentityUserLoginEntityType
     {
-        public static RuntimeEntityType Create(RuntimeModel model, RuntimeEntityType baseEntityType = null)
+        public static RuntimeEntityType Create(RuntimeModel model, RuntimeEntityType? baseEntityType = null)
         {
             var runtimeEntityType = model.AddEntityType(
                 "Microsoft.AspNetCore.Identity.IdentityUserLogin<string>",
@@ -25,7 +25,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(IdentityUserLogin<string>).GetProperty("LoginProvider", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(IdentityUserLogin<string>).GetField("<LoginProvider>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 afterSaveBehavior: PropertySaveBehavior.Throw);
-            loginProvider.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var providerKey = runtimeEntityType.AddProperty(
                 "ProviderKey",
@@ -33,7 +32,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(IdentityUserLogin<string>).GetProperty("ProviderKey", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(IdentityUserLogin<string>).GetField("<ProviderKey>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 afterSaveBehavior: PropertySaveBehavior.Throw);
-            providerKey.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var providerDisplayName = runtimeEntityType.AddProperty(
                 "ProviderDisplayName",
@@ -41,14 +39,12 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(IdentityUserLogin<string>).GetProperty("ProviderDisplayName", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(IdentityUserLogin<string>).GetField("<ProviderDisplayName>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
-            providerDisplayName.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var userId = runtimeEntityType.AddProperty(
                 "UserId",
                 typeof(string),
                 propertyInfo: typeof(IdentityUserLogin<string>).GetProperty("UserId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(IdentityUserLogin<string>).GetField("<UserId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
-            userId.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var key = runtimeEntityType.AddKey(
                 new[] { loginProvider, providerKey });
@@ -62,8 +58,8 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
 
         public static RuntimeForeignKey CreateForeignKey1(RuntimeEntityType declaringEntityType, RuntimeEntityType principalEntityType)
         {
-            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("UserId") },
-                principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id") }),
+            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("UserId")! },
+                principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id")! })!,
                 principalEntityType,
                 deleteBehavior: DeleteBehavior.Cascade,
                 required: true);

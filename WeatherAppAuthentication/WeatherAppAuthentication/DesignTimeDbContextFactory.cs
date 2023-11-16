@@ -13,9 +13,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace WeatherAppAuthentication;
 
-public class
-    DesignTimeDbContextFactory : IDesignTimeDbContextFactory<
-        ApplicationDbContext>
+public class DesignTimeDbContextFactory :
+    IDesignTimeDbContextFactory<ApplicationDbContext>
 {
     public ApplicationDbContext CreateDbContext(string[] args)
     {
@@ -27,10 +26,17 @@ public class
 
         var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
-        builder.UseSqlServer(
-            configuration["ConnectionStrings:DefaultConnection"],
+        // builder.UseSqlServer(
+        //     configuration["ConnectionStrings:DefaultConnection"],
+        //     b => b.MigrationsAssembly("WeatherAppAuthentication"));
+
+        builder.UseMySQL(
+            configuration["ConnectionStrings:MySQL-Local"],
             b => b.MigrationsAssembly("WeatherAppAuthentication"));
+
+
         builder.UseOpenIddict();
+
 
         return new ApplicationDbContext(builder.Options);
     }

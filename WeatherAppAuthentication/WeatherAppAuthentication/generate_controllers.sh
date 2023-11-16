@@ -8,10 +8,8 @@ rootDirectory="$scriptDirectory"
 
 cd "$rootDirectory" || exit
 
-
 # dataContext="DataContextMsSql"
 dataContext="DataContextMySql"
-
 
 PluralizeControllerName() {
   local modelName="$1"
@@ -50,14 +48,11 @@ GenerateControllersRecursively() {
   done
 }
 
-
 Clear
 
 # instalar dot net entity framework e o code-generator para os controladores
 dotnet tool install --global dotnet-ef
 dotnet tool install --global dotnet-aspnet-codegenerator
 
-
 # Chame a função para gerar scaffolding de controladores para todas as classes em sub-pastas
 GenerateControllersRecursively "$entitiesDirectory"
-

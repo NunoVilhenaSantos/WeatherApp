@@ -16,25 +16,37 @@ public static class ApplicationPermissions
     public const string UsersPermissionGroupName = "User Permissions";
 
     public const string RolesPermissionGroupName = "Role Permissions";
+
+
     public static ReadOnlyCollection<ApplicationPermission> AllPermissions;
 
-    public static ApplicationPermission ViewUsers = new("View Users",
+
+    public static ApplicationPermission ViewUsers = new(
+        "View Users",
         "users.view", UsersPermissionGroupName,
         "Permission to view other users account details");
 
-    public static ApplicationPermission ManageUsers = new("Manage Users",
+
+    public static ApplicationPermission ManageUsers = new(
+        "Manage Users",
         "users.manage", UsersPermissionGroupName,
         "Permission to create, delete and modify other users account details");
 
-    public static ApplicationPermission ViewRoles = new("View Roles",
+
+    public static ApplicationPermission ViewRoles = new(
+        "View Roles",
         "roles.view", RolesPermissionGroupName,
         "Permission to view available roles");
 
-    public static ApplicationPermission ManageRoles = new("Manage Roles",
+
+    public static ApplicationPermission ManageRoles = new(
+        "Manage Roles",
         "roles.manage", RolesPermissionGroupName,
         "Permission to create, delete and modify roles");
 
-    public static ApplicationPermission AssignRoles = new("Assign Roles",
+
+    public static ApplicationPermission AssignRoles = new(
+        "Assign Roles",
         "roles.assign", RolesPermissionGroupName,
         "Permission to assign roles to users");
 
@@ -52,6 +64,7 @@ public static class ApplicationPermissions
 
         AllPermissions = allPermissions.AsReadOnly();
     }
+
 
     public static ApplicationPermission GetPermissionByName(
         string permissionName)
@@ -76,14 +89,23 @@ public static class ApplicationPermissions
     }
 }
 
+
 public class ApplicationPermission
 {
+
+    public string Name { get; set; }
+    public string Value { get; set; }
+    public string GroupName { get; set; }
+    public string Description { get; set; }
+    
+    
     public ApplicationPermission()
     {
     }
 
-    public ApplicationPermission(string name, string value, string groupName,
-        string description = null)
+
+    public ApplicationPermission(
+        string name, string value, string groupName, string description = null)
     {
         Name = name;
         Value = value;
@@ -91,15 +113,12 @@ public class ApplicationPermission
         Description = description;
     }
 
-    public string Name { get; set; }
-    public string Value { get; set; }
-    public string GroupName { get; set; }
-    public string Description { get; set; }
 
     public override string ToString()
     {
         return Value;
     }
+
 
     public static implicit operator string(ApplicationPermission permission)
     {

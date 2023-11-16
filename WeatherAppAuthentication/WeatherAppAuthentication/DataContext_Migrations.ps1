@@ -23,7 +23,9 @@ $outputPath = Join-Path -Path $parentDir -ChildPath "SQL\"
 # Especifique o caminho para o arquivo de log com a marca de data e hora
 $logFilePath = Join-Path -Path $parentDir -ChildPath "LOGs\transcript_$timestamp.log"
 
+
 # *************************************************** #
+
 
 # Inicie o transcript para gravar a saída do console
 Start-Transcript -Path $logFilePath
@@ -45,6 +47,9 @@ if (Test-Path .\Migrations\)
 {
     Remove-Item .\Migrations\ -Recurse -Force
 }
+
+
+# *************************************************** #
 
 
 # instalar dot net entity framework e o codegenerator para os controladores

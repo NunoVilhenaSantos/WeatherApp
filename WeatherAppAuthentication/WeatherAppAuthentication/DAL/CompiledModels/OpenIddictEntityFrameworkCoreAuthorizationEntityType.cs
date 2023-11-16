@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using OpenIddict.EntityFrameworkCore.Models;
 
 #pragma warning disable 219, 612, 618
-#nullable disable
+#nullable enable
 
 namespace WeatherAppAuthentication.DAL.CompiledModels
 {
     internal partial class OpenIddictEntityFrameworkCoreAuthorizationEntityType
     {
-        public static RuntimeEntityType Create(RuntimeModel model, RuntimeEntityType baseEntityType = null)
+        public static RuntimeEntityType Create(RuntimeModel model, RuntimeEntityType? baseEntityType = null)
         {
             var runtimeEntityType = model.AddEntityType(
                 "OpenIddict.EntityFrameworkCore.Models.OpenIddictEntityFrameworkCoreAuthorization",
@@ -26,13 +26,11 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 fieldInfo: typeof(OpenIddictEntityFrameworkCoreAuthorization<string, OpenIddictEntityFrameworkCoreApplication, OpenIddictEntityFrameworkCoreToken>).GetField("<Id>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 valueGenerated: ValueGenerated.OnAdd,
                 afterSaveBehavior: PropertySaveBehavior.Throw);
-            id.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var applicationId = runtimeEntityType.AddProperty(
                 "ApplicationId",
                 typeof(string),
                 nullable: true);
-            applicationId.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var concurrencyToken = runtimeEntityType.AddProperty(
                 "ConcurrencyToken",
@@ -42,7 +40,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 nullable: true,
                 concurrencyToken: true,
                 maxLength: 50);
-            concurrencyToken.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var creationDate = runtimeEntityType.AddProperty(
                 "CreationDate",
@@ -50,7 +47,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(OpenIddictEntityFrameworkCoreAuthorization<string, OpenIddictEntityFrameworkCoreApplication, OpenIddictEntityFrameworkCoreToken>).GetProperty("CreationDate", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(OpenIddictEntityFrameworkCoreAuthorization<string, OpenIddictEntityFrameworkCoreApplication, OpenIddictEntityFrameworkCoreToken>).GetField("<CreationDate>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
-            creationDate.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var properties = runtimeEntityType.AddProperty(
                 "Properties",
@@ -58,7 +54,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(OpenIddictEntityFrameworkCoreAuthorization<string, OpenIddictEntityFrameworkCoreApplication, OpenIddictEntityFrameworkCoreToken>).GetProperty("Properties", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(OpenIddictEntityFrameworkCoreAuthorization<string, OpenIddictEntityFrameworkCoreApplication, OpenIddictEntityFrameworkCoreToken>).GetField("<Properties>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
-            properties.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var scopes = runtimeEntityType.AddProperty(
                 "Scopes",
@@ -66,7 +61,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(OpenIddictEntityFrameworkCoreAuthorization<string, OpenIddictEntityFrameworkCoreApplication, OpenIddictEntityFrameworkCoreToken>).GetProperty("Scopes", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(OpenIddictEntityFrameworkCoreAuthorization<string, OpenIddictEntityFrameworkCoreApplication, OpenIddictEntityFrameworkCoreToken>).GetField("<Scopes>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
-            scopes.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var status = runtimeEntityType.AddProperty(
                 "Status",
@@ -75,7 +69,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 fieldInfo: typeof(OpenIddictEntityFrameworkCoreAuthorization<string, OpenIddictEntityFrameworkCoreApplication, OpenIddictEntityFrameworkCoreToken>).GetField("<Status>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true,
                 maxLength: 50);
-            status.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var subject = runtimeEntityType.AddProperty(
                 "Subject",
@@ -84,7 +77,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 fieldInfo: typeof(OpenIddictEntityFrameworkCoreAuthorization<string, OpenIddictEntityFrameworkCoreApplication, OpenIddictEntityFrameworkCoreToken>).GetField("<Subject>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true,
                 maxLength: 400);
-            subject.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var type = runtimeEntityType.AddProperty(
                 "Type",
@@ -93,7 +85,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 fieldInfo: typeof(OpenIddictEntityFrameworkCoreAuthorization<string, OpenIddictEntityFrameworkCoreApplication, OpenIddictEntityFrameworkCoreToken>).GetField("<Type>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true,
                 maxLength: 50);
-            type.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var key = runtimeEntityType.AddKey(
                 new[] { id });
@@ -107,8 +98,8 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
 
         public static RuntimeForeignKey CreateForeignKey1(RuntimeEntityType declaringEntityType, RuntimeEntityType principalEntityType)
         {
-            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("ApplicationId") },
-                principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id") }),
+            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("ApplicationId")! },
+                principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id")! })!,
                 principalEntityType);
 
             var application = declaringEntityType.AddNavigation("Application",

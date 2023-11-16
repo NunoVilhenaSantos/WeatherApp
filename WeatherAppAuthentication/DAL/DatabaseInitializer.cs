@@ -16,12 +16,15 @@ using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
+
 namespace DAL;
+
 
 public interface IDatabaseInitializer
 {
     Task SeedAsync();
 }
+
 
 public class DatabaseInitializer : IDatabaseInitializer
 {

@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 #pragma warning disable 219, 612, 618
-#nullable disable
+#nullable enable
 
 namespace WeatherAppAuthentication.DAL.CompiledModels
 {
     internal partial class ProductEntityType
     {
-        public static RuntimeEntityType Create(RuntimeModel model, RuntimeEntityType baseEntityType = null)
+        public static RuntimeEntityType Create(RuntimeModel model, RuntimeEntityType? baseEntityType = null)
         {
             var runtimeEntityType = model.AddEntityType(
                 "DAL.Models.Product",
@@ -27,7 +27,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 fieldInfo: typeof(Product).GetField("<Id>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 valueGenerated: ValueGenerated.OnAdd,
                 afterSaveBehavior: PropertySaveBehavior.Throw);
-            id.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             var buyingPrice = runtimeEntityType.AddProperty(
                 "BuyingPrice",
@@ -35,70 +34,58 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(Product).GetProperty("BuyingPrice", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<BuyingPrice>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
             buyingPrice.AddAnnotation("Relational:ColumnType", "decimal(18,2)");
-            buyingPrice.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var createdBy = runtimeEntityType.AddProperty(
                 "CreatedBy",
                 typeof(string),
                 propertyInfo: typeof(AuditableEntity).GetProperty("CreatedBy", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(AuditableEntity).GetField("<CreatedBy>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                nullable: true,
                 maxLength: 256);
-            createdBy.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var createdDate = runtimeEntityType.AddProperty(
                 "CreatedDate",
                 typeof(DateTime),
                 propertyInfo: typeof(AuditableEntity).GetProperty("CreatedDate", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(AuditableEntity).GetField("<CreatedDate>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
-            createdDate.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var dateCreated = runtimeEntityType.AddProperty(
                 "DateCreated",
                 typeof(DateTime),
                 propertyInfo: typeof(Product).GetProperty("DateCreated", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<DateCreated>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
-            dateCreated.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var dateModified = runtimeEntityType.AddProperty(
                 "DateModified",
                 typeof(DateTime),
                 propertyInfo: typeof(Product).GetProperty("DateModified", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<DateModified>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
-            dateModified.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var description = runtimeEntityType.AddProperty(
                 "Description",
                 typeof(string),
                 propertyInfo: typeof(Product).GetProperty("Description", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<Description>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                nullable: true,
                 maxLength: 500);
-            description.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var icon = runtimeEntityType.AddProperty(
                 "Icon",
                 typeof(string),
                 propertyInfo: typeof(Product).GetProperty("Icon", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<Icon>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                nullable: true,
                 maxLength: 256,
                 unicode: false);
-            icon.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var isActive = runtimeEntityType.AddProperty(
                 "IsActive",
                 typeof(bool),
                 propertyInfo: typeof(Product).GetProperty("IsActive", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<IsActive>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
-            isActive.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var isDiscontinued = runtimeEntityType.AddProperty(
                 "IsDiscontinued",
                 typeof(bool),
                 propertyInfo: typeof(Product).GetProperty("IsDiscontinued", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<IsDiscontinued>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
-            isDiscontinued.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var name = runtimeEntityType.AddProperty(
                 "Name",
@@ -106,7 +93,6 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(Product).GetProperty("Name", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<Name>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 maxLength: 100);
-            name.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var parentId = runtimeEntityType.AddProperty(
                 "ParentId",
@@ -114,14 +100,12 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(Product).GetProperty("ParentId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<ParentId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
-            parentId.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var productCategoryId = runtimeEntityType.AddProperty(
                 "ProductCategoryId",
                 typeof(int),
                 propertyInfo: typeof(Product).GetProperty("ProductCategoryId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<ProductCategoryId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
-            productCategoryId.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var sellingPrice = runtimeEntityType.AddProperty(
                 "SellingPrice",
@@ -129,30 +113,25 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
                 propertyInfo: typeof(Product).GetProperty("SellingPrice", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<SellingPrice>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
             sellingPrice.AddAnnotation("Relational:ColumnType", "decimal(18,2)");
-            sellingPrice.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var unitsInStock = runtimeEntityType.AddProperty(
                 "UnitsInStock",
                 typeof(int),
                 propertyInfo: typeof(Product).GetProperty("UnitsInStock", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(Product).GetField("<UnitsInStock>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
-            unitsInStock.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var updatedBy = runtimeEntityType.AddProperty(
                 "UpdatedBy",
                 typeof(string),
                 propertyInfo: typeof(AuditableEntity).GetProperty("UpdatedBy", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(AuditableEntity).GetField("<UpdatedBy>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                nullable: true,
                 maxLength: 256);
-            updatedBy.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var updatedDate = runtimeEntityType.AddProperty(
                 "UpdatedDate",
                 typeof(DateTime),
                 propertyInfo: typeof(AuditableEntity).GetProperty("UpdatedDate", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(AuditableEntity).GetField("<UpdatedDate>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
-            updatedDate.AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
 
             var key = runtimeEntityType.AddKey(
                 new[] { id });
@@ -172,8 +151,8 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
 
         public static RuntimeForeignKey CreateForeignKey1(RuntimeEntityType declaringEntityType, RuntimeEntityType principalEntityType)
         {
-            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("ParentId") },
-                principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id") }),
+            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("ParentId")! },
+                principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id")! })!,
                 principalEntityType,
                 deleteBehavior: DeleteBehavior.Restrict);
 
@@ -196,8 +175,8 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
 
         public static RuntimeForeignKey CreateForeignKey2(RuntimeEntityType declaringEntityType, RuntimeEntityType principalEntityType)
         {
-            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("ProductCategoryId") },
-                principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id") }),
+            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("ProductCategoryId")! },
+                principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id")! })!,
                 principalEntityType,
                 deleteBehavior: DeleteBehavior.Cascade,
                 required: true);

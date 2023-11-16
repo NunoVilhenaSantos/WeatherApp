@@ -19,11 +19,13 @@ public class OidcServerManager
     public const string QuickAppClientID = "quickapp_spa";
     public const string SwaggerClientID = "swagger_ui";
 
+
     public static async Task RegisterApplicationsAsync(
         IServiceProvider provider)
     {
         var manager =
             provider.GetRequiredService<IOpenIddictApplicationManager>();
+
 
         // Angular SPA Client
         if (await manager.FindByClientIdAsync(QuickAppClientID) is null)
@@ -44,6 +46,7 @@ public class OidcServerManager
                     Permissions.Scopes.Roles
                 }
             });
+
 
         // Swagger UI Client
         if (await manager.FindByClientIdAsync(SwaggerClientID) is null)

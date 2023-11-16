@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 #pragma warning disable 219, 612, 618
-#nullable disable
+#nullable enable
 
 namespace WeatherAppAuthentication.DAL.CompiledModels
 {
@@ -63,8 +63,7 @@ namespace WeatherAppAuthentication.DAL.CompiledModels
             OpenIddictEntityFrameworkCoreTokenEntityType.CreateAnnotations(openIddictEntityFrameworkCoreToken);
 
             AddAnnotation("ProductVersion", "7.0.13");
-            AddAnnotation("Relational:MaxIdentifierLength", 128);
-            AddAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            AddAnnotation("Relational:MaxIdentifierLength", 64);
         }
     }
 }
